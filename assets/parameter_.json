@@ -1,0 +1,44 @@
+{
+    "gravityConstant": 0.1,
+    "centerX": 400,
+    "centerY": 400,
+    "scaleFactor": 2.0,
+    "sun": {
+      "name": "Sun",
+      "radius": 30,
+      "mass": 100000,
+      "distance": 0,
+      "velocity_x": 0,
+      "velocity_y": 0,
+      "color": "$ffff66"
+    },
+    "planets": [
+      {
+        "name": "Earth",
+        "radius": 15,
+        "mass": 1000,
+        "distance": 200,
+        "velocity_x": 0,
+        "velocity_y": 2,
+        "color": "$3366ff"
+      },
+      {
+        "name": "Mars",
+        "radius": 10,
+        "mass": 800,
+        "distance": 300,
+        "velocity_x": 0,
+        "velocity_y": 1.5,
+        "color": "$ff5050"
+      },
+      {
+        "name": "Venus",
+        "radius": 12,
+        "mass": 900,
+        "distance": 150,
+        "velocity_x": 0,
+        "velocity_y": 2.5,
+        "color": "$ffb366"
+      }
+    ]
+  }
