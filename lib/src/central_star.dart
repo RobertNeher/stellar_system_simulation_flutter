@@ -28,7 +28,7 @@ class CentralStar {
         json['velocity_x'].toDouble(),
         json['velocity_y'].toDouble(),
       ),
-      color: Color(int.parse("${json['color'].substring(1)}")),
+      color: Color(int.parse("0x${json['color'].substring(1)}")),
     );
   }
   @override

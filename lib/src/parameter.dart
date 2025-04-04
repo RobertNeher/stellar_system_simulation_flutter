@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class Parameter {
   int windowHeight = 0;
   int windowWidth = 0;
@@ -10,6 +12,7 @@ class Parameter {
   double scaleFctor = 0;
   int updatePeriod = 0;
   int timeStep = 0;
+  Color backgroundColor = Colors.black;
 
   Parameter({
     required this.windowHeight,
@@ -23,6 +26,7 @@ class Parameter {
     required this.scaleFctor,
     required this.updatePeriod,
     required this.timeStep,
+    required this.backgroundColor,
   });
 
   factory Parameter.fromJson(Map<String, dynamic> json) {
@@ -38,6 +42,7 @@ class Parameter {
       scaleFctor: json['scaleFactor'],
       updatePeriod: json['updatePeriod'],
       timeStep: json['timeStep'],
+      backgroundColor: Color(int.parse("0x${json['color'].substring(1)}")),
     );
   }
 
@@ -52,6 +57,7 @@ class Parameter {
     print("Scale: ${this.scaleFctor}");
     print("Timestep: ${this.timeStep}");
     print("Period: ${this.updatePeriod}");
+    print("bg color: ${this.backgroundColor}");
     return super.toString();
   }
 }
