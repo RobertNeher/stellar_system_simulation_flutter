@@ -69,7 +69,7 @@ class _PlanetSimulationState extends State<PlanetSimulation>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: params?.backgroundColor,
       body: AnimatedBuilder(
         animation: _controller,
         builder: (context, child) {
