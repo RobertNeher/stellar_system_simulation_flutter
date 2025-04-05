@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 // '#<red in hex><green in hex><blue in hex>', eg. '#262626'
 Color colorFromString(String colorString) {
   String color = '0xff${colorString.substring(1)}';
-  print(int.parse(color));
   return Color(int.parse(color));
 }
 
