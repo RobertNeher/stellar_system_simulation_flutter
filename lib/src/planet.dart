@@ -25,10 +25,10 @@ class Planet {
       mass: json['mass'].toDouble(),
       position: vector.Vector2(json['distance'].toDouble(), 0),
       velocity: vector.Vector2(
-        json['velocity_x'].toDouble(),
-        json['velocity_y'].toDouble(),
+        json['velocityX'].toDouble(),
+        json['velocityY'].toDouble(),
       ),
-      color: Color(int.parse('0x${json['color'].substring(1)}')),
+      color: Color(int.parse('0x${json['color']}')),
     );
   }
 }

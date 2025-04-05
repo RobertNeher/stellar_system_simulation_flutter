@@ -3,24 +3,24 @@
     "parameter": {
         "windowHeight": 1400,
         "windowWidth": 1400,
-        "centerX": 0,
-        "centerY": 0,
+        "centerX": 700,
+        "centerY": 700,
         "font": "comicsans",
         "fontSize": 16,
-        "astronomicalUnit": 149600000000,
+        "astronomicalUnit": 149600000000000,
         "gravityConstant": 6.67428e-11,
         "scaleFactor": 60,
         "updatePeriod": 1,
         "timeStep": 86400,
-        "backgroundColor": "000000"
+        "backgroundColor": "#000000"
     },
     "centralStar": {
         "name": "Sun",
         "distance": 0,
         "mass": 1989100,
-        "color": "fffff6",
-        "velocity_x": 0,
-        "velocity_y": 0,
+        "color": "#fffff6",
+        "velocityX": 0,
+        "velocityY": 0,
         "diameter": 1392000
     },
     "planets": [
@@ -28,7 +28,7 @@
             "name": "Mercury",
             "distance": 0.387,
             "mass": 0.330,
-            "color": "262626",
+            "color": "#262626",
             "velocityX": 0,
             "velocityY":  -47900,
             "diameter": 4879.4
@@ -37,7 +37,7 @@
             "name": "Venus",
             "distance": 0.723,
             "mass": 4.8685,
-            "color": "ffcc99",
+            "color": "#ffcc99",
             "velocityX": 0,
             "velocityY": -35200,
             "diameter": 12103.6
@@ -46,7 +46,7 @@
             "name": "Earth",
             "distance": 1.0,
             "mass": 5.9742,
-            "color": "0080ff",
+            "color": "#0080ff",
             "velocityX": 0,
             "velocityY":  29783,
             "diameter": 12742
@@ -55,7 +55,7 @@
             "name": "Mars",
             "distance": 1.524,
             "mass": 0.639,
-            "color": "990000",
+            "color": "#990000",
             "velocityX": 0,
             "velocityY": 24077,
             "diameter": 6792.4
@@ -64,7 +64,7 @@
             "name": "Jupiter",
             "distance": 5.2,
             "mass": 1898.6,
-            "color": "ffd24d",
+            "color": "#ffd24d",
             "velocityX": 0,
             "velocityY": -13060,
             "diameter": 142984
@@ -73,7 +73,7 @@
             "name": "Saturn",
             "distance": 9.6,
             "mass": 568.46,
-            "color": "ffdf80",
+            "color": "#ffdf80",
             "velocityX": 0,
             "velocityY": -9680,
             "diameter": 120536
@@ -82,7 +82,7 @@
             "name": "Uranus",
             "distance": 19.2,
             "mass": 86.81,
-            "color": "0090ff",
+            "color": "#0090ff",
             "velocityX": 0,
             "velocityY": 6810,
             "diameter": 51118
@@ -91,7 +91,7 @@
             "name": "Neptune",
             "distance": 30.1,
             "mass": 102.43,
-            "color": "4db8ff",
+            "color": "#4db8ff",
             "velocityX": 0,
             "velocityY": -5455,
             "diameter": 49528

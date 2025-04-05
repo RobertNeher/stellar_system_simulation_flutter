@@ -7,9 +7,9 @@ class Parameter {
   double centerY = 0;
   String font = "";
   int fontSize = 0;
-  int astronomicalUnit = 0;
+  double astronomicalUnit = 0;
   double gravityConstant = 0;
-  double scaleFctor = 0;
+  double scaleFactor = 0;
   int updatePeriod = 0;
   int timeStep = 0;
   Color backgroundColor = Colors.black;
@@ -23,7 +23,7 @@ class Parameter {
     required this.fontSize,
     required this.astronomicalUnit,
     required this.gravityConstant,
-    required this.scaleFctor,
+    required this.scaleFactor,
     required this.updatePeriod,
     required this.timeStep,
     required this.backgroundColor,
@@ -33,16 +33,16 @@ class Parameter {
     return Parameter(
       windowHeight: json['windowHeight'],
       windowWidth: json['windowWidth'],
-      centerX: json['centerX'],
-      centerY: json['centerY'],
+      centerX: json['centerX'].toDouble(),
+      centerY: json['centerY'].toDouble(),
       font: json['font'],
       fontSize: json['fontSize'],
-      astronomicalUnit: json['astronomicalUnit'],
-      gravityConstant: json['gravityConstant'],
-      scaleFctor: json['scaleFactor'],
+      astronomicalUnit: json['astronomicalUnit'].toDouble(),
+      gravityConstant: json['gravityConstant'].toDouble(),
+      scaleFactor: json['scaleFactor'].toDouble(),
       updatePeriod: json['updatePeriod'],
       timeStep: json['timeStep'],
-      backgroundColor: Color(int.parse("0x${json['color'].substring(1)}")),
+      backgroundColor: Color(int.parse("0x${json['backgroundColor']}")),
     );
   }
 
@@ -54,7 +54,7 @@ class Parameter {
     print("Gravity Constant: ${this.gravityConstant}");
     print("centerX/Y: ${this.centerX}/${this.centerY}");
     print("Font: ${this.font}(${this.fontSize})");
-    print("Scale: ${this.scaleFctor}");
+    print("Scale: ${this.scaleFactor}");
     print("Timestep: ${this.timeStep}");
     print("Period: ${this.updatePeriod}");
     print("bg color: ${this.backgroundColor}");

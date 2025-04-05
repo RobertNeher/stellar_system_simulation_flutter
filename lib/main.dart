@@ -1,135 +1,107 @@
 import 'dart:convert';
-import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:planet_simulation_flutter/src/planet.dart';
-import 'package:planet_simulation_flutter/src/central_star.dart';
-import 'package:planet_simulation_flutter/src/parameter.dart';
-import 'package:vector_math/vector_math.dart' as vector;
+import 'package:planet_simulation_flutter/src/planetary_system.dart';
+import 'package:planet_simulation_flutter/src/helper.dart';
 
-void main() {
-  runApp(const PlanetSimulationApp());
-}
+void main() => runApp(
+  MaterialApp(
+    home: PlanetarySystemSimulationApp(),
+    debugShowCheckedModeBanner: false,
+  ),
+);
 
-class PlanetSimulationApp extends StatelessWidget {
-  const PlanetSimulationApp({super.key});
-
+class PlanetarySystemSimulationApp extends StatefulWidget {
+  const PlanetarySystemSimulationApp({super.key});
+  final String appBarTitle = 'Planetary System Simulation';
   @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(home: PlanetSimulation());
-  }
+  State<PlanetarySystemSimulationApp> createState() =>
+      _PlanetarySystemSimulationAppState();
 }
 
-class PlanetSimulation extends StatefulWidget {
-  const PlanetSimulation({super.key});
-
-  @override
-  _PlanetSimulationState createState() => _PlanetSimulationState();
-}
-
-class _PlanetSimulationState extends State<PlanetSimulation>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late List<Planet> planets = [];
-  Parameter? params;
-  CentralStar? centralStar;
+class _PlanetarySystemSimulationAppState
+    extends State<PlanetarySystemSimulationApp>
+    with TickerProviderStateMixin {
+  Map<String, dynamic> settings = {};
 
   @override
   void initState() {
+    _loadSettings();
     super.initState();
-    _controller = AnimationController(
-      duration: const Duration(milliseconds: 16),
-      vsync: this,
-    )..repeat();
-    _loadData();
   }
 
-  Future<void> _loadData() async {
-    final String data = await rootBundle.loadString('parameter.json');
-    final Map<String, dynamic> jsonData = json.decode(data);
-    setState(() {
-      print("Load data...");
-      params = Parameter.fromJson(jsonData['parameter']);
-      print(params);
-      centralStar = CentralStar.fromJson(jsonData['centralStar']);
-      print(centralStar);
-      planets =
-          (jsonData['planets'] as List)
-              .map((planet) => Planet.fromJson(planet))
-              .toList();
-    });
+  Future<void> _loadSettings() async {
+    String jsonData = await rootBundle.loadString('settings.json');
+    // String settings = File('assets/settings.json').readAsStringSync();
+    settings = json.decode(jsonData);
   }
 
   @override
   void dispose() {
-    _controller.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: params?.backgroundColor,
-      body: AnimatedBuilder(
-        animation: _controller,
-        builder: (context, child) {
-          _updatePlanets();
-          return Stack(
-            children: [
-              Positioned(
-                left: params!.centerX - centralStar!.diameter / 2,
-                top: params!.centerY - centralStar!.diameter / 2,
-                child: Container(
-                  width: centralStar!.diameter,
-                  height: centralStar!.diameter,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: centralStar!.color,
-                  ),
-                ),
-              ),
-              ...planets.map(
-                (planet) => Positioned(
-                  left:
-                      planet.position.x + params!.centerX - planet.diameter / 2,
-                  top:
-                      planet.position.y + params!.centerY - planet.diameter / 2,
-                  child: Container(
-                    width: planet.diameter,
-                    height: planet.diameter,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: planet.color,
-                    ),
-                  ),
-                ),
-              ),
-            ],
+    return FutureBuilder<void>(
+      future: _loadSettings(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Center(
+            child: CircularProgressIndicator(
+              backgroundColor: Colors.blue,
+              strokeWidth: 5,
+            ),
           );
-        },
-      ),
+        }
+        if (snapshot.connectionState == ConnectionState.done) {
+          print(settings['parameter']);
+          print(settings['centralStar']);
+          print(settings['planets']);
+          return Center(
+            child: Scaffold(
+              backgroundColor: colorFromString(
+                settings['parameter']['backgroundColor'],
+              ),
+              appBar: AppBar(
+                centerTitle: true,
+                title: Text(
+                  widget.appBarTitle,
+                  // textDirection: TextDirection.ltr,
+                  style: TextStyle(
+                    color: complimentaryColor(
+                      settings['parameter']['backgroundColor'],
+                    ),
+                    letterSpacing: 1,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ),
+              body: Center(
+                child: CustomPaint(
+                  painter: PlanetarySystem(
+                    centralStar: settings['centralStar'],
+                    // planets: settings['planets'],
+                    parameter: settings['parameter'],
+                    spaceTime: 0,
+                  ),
+                ),
+              ),
+            ),
+          );
+        } else {
+          return Text(
+            'Something went wrong!',
+            style: TextStyle(
+              // fontFamily: 'Railway',
+              fontWeight: FontWeight.bold,
+              fontSize: 24,
+              color: Colors.red,
+            ),
+          );
+        }
+      },
     );
-  }
-
-  void _updatePlanets() {
-    for (var planet in planets) {
-      final distanceVector = vector.Vector2(
-        (params!.centerX - planet.position.x),
-        (params!.centerY - planet.position.y),
-      );
-      final distance = distanceVector.length;
-
-      if (distance > 0) {
-        final force =
-            params!.gravityConstant *
-            planet.mass *
-            centralStar!.mass /
-            pow(distance, 2);
-        final acceleration = distanceVector.normalized() * force / planet.mass;
-
-        planet.velocity += acceleration;
-        planet.position += planet.velocity;
-      }
-    }
   }
 }
