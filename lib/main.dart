@@ -32,7 +32,6 @@ class _PlanetarySystemSimulationAppState
 
   Future<void> _loadSettings() async {
     String jsonData = await rootBundle.loadString('settings.json');
-    // String settings = File('assets/settings.json').readAsStringSync();
     settings = json.decode(jsonData);
   }
 
@@ -55,9 +54,6 @@ class _PlanetarySystemSimulationAppState
           );
         }
         if (snapshot.connectionState == ConnectionState.done) {
-          print(settings['parameter']);
-          print(settings['centralStar']);
-          print(settings['planets']);
           return Center(
             child: Scaffold(
               backgroundColor: colorFromString(
@@ -82,7 +78,7 @@ class _PlanetarySystemSimulationAppState
                 child: CustomPaint(
                   painter: PlanetarySystem(
                     centralStar: settings['centralStar'],
-                    // planets: settings['planets'],
+                    planets: settings['planets'],
                     parameter: settings['parameter'],
                     spaceTime: 0,
                   ),
