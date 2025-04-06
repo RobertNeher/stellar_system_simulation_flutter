@@ -7,21 +7,23 @@
         "centerY": 700,
         "font": "comicsans",
         "fontSize": 16,
-        "astronomicalUnit": 149600000000000,
+        "astronomicalUnit": 149600000000,
         "gravityConstant": 6.67428e-11,
-        "scaleFactor": 60,
+        "scaleFactor": 100000,
         "updatePeriod": 1,
         "timeStep": 86400,
         "backgroundColor": "#000000"
     },
     "centralStar": {
         "name": "Sun",
-        "distance": 0,
         "mass": 1989100,
         "color": "#fffff6",
+        "diameter": 1392000000,
         "velocityX": 0,
         "velocityY": 0,
-        "diameter": 1392000
+        "centerX": 0,
+        "centerY": 0,
+        "size": 11000
     },
     "planets": [
         {
@@ -30,8 +32,9 @@
             "mass": 0.330,
             "color": "#262626",
             "velocityX": 0,
-            "velocityY":  -47900,
-            "diameter": 4879.4
+            "velocityY":  -47900000,
+            "diameter": 4879400,
+            "size": 3
         },
         {
             "name": "Venus",
@@ -40,7 +43,8 @@
             "color": "#ffcc99",
             "velocityX": 0,
             "velocityY": -35200,
-            "diameter": 12103.6
+            "diameter": 12103600,
+            "size": 10
         },
         {
             "name": "Earth",
@@ -48,8 +52,9 @@
             "mass": 5.9742,
             "color": "#0080ff",
             "velocityX": 0,
-            "velocityY":  29783,
-            "diameter": 12742
+            "velocityY":  29783000,
+            "diameter": 12742000,
+            "size": 10
         },
         {
             "name": "Mars",
@@ -57,8 +62,9 @@
             "mass": 0.639,
             "color": "#990000",
             "velocityX": 0,
-            "velocityY": 24077,
-            "diameter": 6792.4
+            "velocityY": 24077000,
+            "diameter": 6792400,
+            "size": 5
         },
         {
             "name": "Jupiter",
@@ -66,8 +72,9 @@
             "mass": 1898.6,
             "color": "#ffd24d",
             "velocityX": 0,
-            "velocityY": -13060,
-            "diameter": 142984
+            "velocityY": -13060000,
+            "diameter": 142984000,
+            "size": 110
         },
         {
             "name": "Saturn",
@@ -75,8 +82,9 @@
             "mass": 568.46,
             "color": "#ffdf80",
             "velocityX": 0,
-            "velocityY": -9680,
-            "diameter": 120536
+            "velocityY": -9680000,
+            "diameter": 120536000,
+            "size": 90
         },
         {
             "name": "Uranus",
@@ -84,8 +92,9 @@
             "mass": 86.81,
             "color": "#0090ff",
             "velocityX": 0,
-            "velocityY": 6810,
-            "diameter": 51118
+            "velocityY": 6810000,
+            "diameter": 51118000,
+            "size": 40
         },
         {
             "name": "Neptune",
@@ -93,8 +102,9 @@
             "mass": 102.43,
             "color": "#4db8ff",
             "velocityX": 0,
-            "velocityY": -5455,
-            "diameter": 49528
+            "velocityY": -5455000,
+            "diameter": 49528000,
+            "size": 40
         }
     ]
 }

@@ -1,41 +1,65 @@
 import 'package:flutter/material.dart';
-import 'package:planet_simulation_flutter/src/helper.dart';
+
+import 'package:planet_simulation_flutter/src/central_star.dart';
+import 'package:planet_simulation_flutter/src/parameter.dart';
+import 'package:planet_simulation_flutter/src/planet.dart';
 
 class PlanetarySystem extends CustomPainter {
-  Map<String, dynamic> parameter = {};
-  Map<String, dynamic> centralStar = {};
-  List<Map<String, dynamic>> planets = [];
+  Parameter parameter;
+  CentralStar centralStar;
+  List<Planet> planets = [];
   int spaceTime = 0;
   double factor = 0.0;
 
   PlanetarySystem({
-    required Map<String, dynamic> this.centralStar,
-    required List<dynamic> planets,
-    required Map<String, dynamic> this.parameter,
-    required int this.spaceTime,
+    required this.parameter,
+    required this.centralStar,
+    required this.planets,
+    required this.spaceTime,
+    required this.factor,
   }) {
-    for (Map<String, dynamic> planet in planets) {
-      this.planets.add(planet);
-    }
-    factor = parameter['windowWidth'] / parameter['astronomicalUnit'];
+    factor =
+        parameter.scaleFactor *
+        parameter.astronomicalUnit /
+        centralStar.diameter;
+
+    print(factor); // TODO: Remove print
+    print(centralStar.size); // TODO: Remove print
   }
 
   @override
   void paint(Canvas canvas, Size size) {
     Offset centralStarLocation = Offset(
-      centralStar['centerX'],
-      centralStar['centerY'],
+      centralStar.position.x,
+      centralStar.position.y,
     );
     Paint centralStarPaint =
         Paint()
-          ..color = colorFromString(centralStar['color'])
+          ..color = centralStar.color
           ..style = PaintingStyle.fill;
-    //print(centralStar['diameter'] / 2 * factor);
+
     canvas.drawCircle(
       centralStarLocation,
-      centralStar['diameter'] / 2 * factor,
+      centralStar.size / parameter.scaleFactor,
       centralStarPaint,
     );
+
+    for (Planet planet in planets) {
+      Offset planetLocation = Offset(
+        parameter.windowWidth * planet.position.x,
+        parameter.windowWidth * planet.position.y,
+      );
+      Paint planetPaint =
+          Paint()
+            ..color = planet.color
+            ..style = PaintingStyle.fill;
+
+      canvas.drawCircle(
+        planetLocation,
+        parameter.windowWidth * planet.diameter / (2 * parameter.scaleFactor),
+        planetPaint,
+      );
+    }
   }
 
   @override

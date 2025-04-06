@@ -42,7 +42,9 @@ class Parameter {
       scaleFactor: json['scaleFactor'].toDouble(),
       updatePeriod: json['updatePeriod'],
       timeStep: json['timeStep'],
-      backgroundColor: Color(int.parse("0x${json['backgroundColor']}")),
+      backgroundColor: Color(
+        int.parse("0x${json['backgroundColor'].substring(1)}"),
+      ),
     );
   }
 

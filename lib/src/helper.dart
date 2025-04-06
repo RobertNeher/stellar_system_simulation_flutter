@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:flutter/material.dart';
 
 // colorString is expected in following format:
@@ -7,12 +8,30 @@ Color colorFromString(String colorString) {
   return Color(int.parse(color));
 }
 
-Color complimentaryColor(String rgb) {
+Color complimentaryColorFromString(String rgb) {
   Color color = colorFromString(rgb);
   return Color.fromARGB(
     color.a.toInt(),
     255 - color.r.toInt(),
     255 - color.b.toInt(),
     255 - color.g.toInt(),
+  );
+}
+
+Color complimentaryColorFromColor(Color color) {
+  return Color.fromARGB(
+    color.a.toInt(),
+    255 - color.r.toInt(),
+    255 - color.b.toInt(),
+    255 - color.g.toInt(),
+  );
+}
+
+Color randomColor() {
+  return Color.from(
+    alpha: 0,
+    red: Random().nextDouble() * 256,
+    green: Random().nextDouble() * 256,
+    blue: Random().nextDouble() * 256,
   );
 }

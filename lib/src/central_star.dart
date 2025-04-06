@@ -8,6 +8,7 @@ class CentralStar {
   vector.Vector2 position;
   vector.Vector2 velocity;
   Color color;
+  int size;
 
   CentralStar({
     required this.name,
@@ -16,6 +17,7 @@ class CentralStar {
     required this.position,
     required this.velocity,
     required this.color,
+    required this.size,
   });
 
   factory CentralStar.fromJson(Map<String, dynamic> json) {
@@ -23,12 +25,17 @@ class CentralStar {
       name: json['name'],
       diameter: json['diameter'].toDouble(),
       mass: json['mass'].toDouble(),
-      position: vector.Vector2(json['distance'].toDouble(), 0),
+      position: vector.Vector2(
+        json['centerX'].toDouble(),
+        json['centerY'].toDouble(),
+      ),
       velocity: vector.Vector2(
         json['velocityX'].toDouble(),
         json['velocityY'].toDouble(),
       ),
-      color: Color(int.parse("0x${json['color']}")),
+      // color: int.parse("0x${json['color'].substring(1)}"),
+      color: Color(int.parse("0x${json['color'].substring(1)}")),
+      size: json['size'],
     );
   }
   @override
@@ -37,8 +44,10 @@ class CentralStar {
     print("Name: ${this.name}");
     print("Diameter: ${this.diameter}");
     print("Mass: ${this.mass}");
+    print("Position: ${this.position}");
     print("VelocityX/Y: ${this.velocity}");
     print("Color: ${this.color.toString()}");
+    print("Size: ${this.size}");
     return super.toString();
   }
 }

@@ -8,6 +8,7 @@ class Planet {
   vector.Vector2 position;
   vector.Vector2 velocity;
   Color color;
+  int size;
 
   Planet({
     required this.name,
@@ -16,6 +17,7 @@ class Planet {
     required this.position,
     required this.velocity,
     required this.color,
+    required this.size
   });
 
   factory Planet.fromJson(Map<String, dynamic> json) {
@@ -28,7 +30,8 @@ class Planet {
         json['velocityX'].toDouble(),
         json['velocityY'].toDouble(),
       ),
-      color: Color(int.parse('0x${json['color']}')),
+      color: Color(int.parse('0x${json['color'].substring(1)}')),
+      size: json['size']
     );
   }
 }

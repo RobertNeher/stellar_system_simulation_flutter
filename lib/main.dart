@@ -1,6 +1,9 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:planet_simulation_flutter/src/central_star.dart';
+import 'package:planet_simulation_flutter/src/parameter.dart';
+import 'package:planet_simulation_flutter/src/planet.dart';
 import 'package:planet_simulation_flutter/src/planetary_system.dart';
 import 'package:planet_simulation_flutter/src/helper.dart';
 
@@ -54,21 +57,30 @@ class _PlanetarySystemSimulationAppState
           );
         }
         if (snapshot.connectionState == ConnectionState.done) {
+          List<Planet> planets = [];
+          Parameter parameter = Parameter.fromJson(settings['parameter']);
+          CentralStar centralStar = CentralStar.fromJson(
+            settings['centralStar'],
+          );
+
+          for (Map<String, dynamic> planet in settings['planets']) {
+            planets.add(Planet.fromJson(planet));
+          }
+          
           return Center(
             child: Scaffold(
-              backgroundColor: colorFromString(
-                settings['parameter']['backgroundColor'],
-              ),
+              backgroundColor: parameter.backgroundColor,
               appBar: AppBar(
+                backgroundColor: parameter.backgroundColor,
                 centerTitle: true,
                 title: Text(
                   widget.appBarTitle,
                   // textDirection: TextDirection.ltr,
                   style: TextStyle(
-                    color: complimentaryColor(
-                      settings['parameter']['backgroundColor'],
+                    color: complimentaryColorFromColor(
+                      parameter.backgroundColor,
                     ),
-                    letterSpacing: 1,
+                    letterSpacing: 3,
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
                   ),
@@ -77,10 +89,11 @@ class _PlanetarySystemSimulationAppState
               body: Center(
                 child: CustomPaint(
                   painter: PlanetarySystem(
-                    centralStar: settings['centralStar'],
-                    planets: settings['planets'],
-                    parameter: settings['parameter'],
+                    centralStar: centralStar,
+                    planets: planets,
+                    parameter: parameter,
                     spaceTime: 0,
+                    factor: parameter.scaleFactor,
                   ),
                 ),
               ),
