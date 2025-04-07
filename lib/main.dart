@@ -6,6 +6,7 @@ import 'package:planet_simulation_flutter/src/parameter.dart';
 import 'package:planet_simulation_flutter/src/planet.dart';
 import 'package:planet_simulation_flutter/src/planetary_system.dart';
 import 'package:planet_simulation_flutter/src/helper.dart';
+import 'package:planet_simulation_flutter/src/stars.dart';
 
 void main() => runApp(
   MaterialApp(
@@ -56,26 +57,41 @@ class _PlanetarySystemSimulationAppState
             ),
           );
         }
-        if (snapshot.connectionState == ConnectionState.done) {
-          List<Planet> planets = [];
-          Parameter parameter = Parameter.fromJson(settings['parameter']);
-          CentralStar centralStar = CentralStar.fromJson(
-            settings['centralStar'],
-          );
+          if (snapshot.connectionState == ConnectionState.done) {
+            List<Planet> planets = [];
+            Parameter parameter = Parameter.fromJson(settings['parameter']);
+            CentralStar centralStar = CentralStar.fromJson(
+              settings['centralStar'],
+            );
 
-          for (Map<String, dynamic> planet in settings['planets']) {
-            planets.add(Planet.fromJson(planet));
-          }
-          
-          return Center(
-            child: Scaffold(
+            for (Map<String, dynamic> planet in settings['planets']) {
+              planets.add(Planet.fromJson(planet));
+            }
+            Stack sky = Stack(
+              alignment: Alignment.center,
+              children: [
+                CustomPaint(
+                  painter: PlanetarySystem(
+                    centralStar: centralStar,
+                    planets: planets,
+                    parameter: parameter,
+                    spaceTime: 0,
+                  ),
+                ),
+              ],
+            );
+
+            if (parameter.stars) {
+              print("Hier?");
+              sky.children.add(stars(parameter));
+            }
+            return Scaffold(
               backgroundColor: parameter.backgroundColor,
               appBar: AppBar(
                 backgroundColor: parameter.backgroundColor,
                 centerTitle: true,
                 title: Text(
                   widget.appBarTitle,
-                  // textDirection: TextDirection.ltr,
                   style: TextStyle(
                     color: complimentaryColorFromColor(
                       parameter.backgroundColor,
@@ -86,29 +102,18 @@ class _PlanetarySystemSimulationAppState
                   ),
                 ),
               ),
-              body: Center(
-                child: CustomPaint(
-                  painter: PlanetarySystem(
-                    centralStar: centralStar,
-                    planets: planets,
-                    parameter: parameter,
-                    spaceTime: 0,
-                    factor: parameter.scaleFactor,
-                  ),
-                ),
+              body: sky,
+            );
+          } else {
+            return Text(
+              'Something went wrong!',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 24,
+                color: Colors.red,
               ),
-            ),
-          );
-        } else {
-          return Text(
-            'Something went wrong!',
-            style: TextStyle(
-              // fontFamily: 'Railway',
-              fontWeight: FontWeight.bold,
-              fontSize: 24,
-              color: Colors.red,
-            ),
-          );
+            );
+          }
         }
       },
     );

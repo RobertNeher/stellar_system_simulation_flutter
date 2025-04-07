@@ -9,22 +9,16 @@ class PlanetarySystem extends CustomPainter {
   CentralStar centralStar;
   List<Planet> planets = [];
   int spaceTime = 0;
-  double factor = 0.0;
+  double maxSpaceSize = 0.0;
+  double radius = 0.0;
 
   PlanetarySystem({
     required this.parameter,
     required this.centralStar,
     required this.planets,
     required this.spaceTime,
-    required this.factor,
   }) {
-    factor =
-        parameter.scaleFactor *
-        parameter.astronomicalUnit /
-        centralStar.diameter;
-
-    print(factor); // TODO: Remove print
-    print(centralStar.size); // TODO: Remove print
+    maxSpaceSize = parameter.scaleFactor * parameter.astronomicalUnit;
   }
 
   @override
@@ -38,27 +32,32 @@ class PlanetarySystem extends CustomPainter {
           ..color = centralStar.color
           ..style = PaintingStyle.fill;
 
-    canvas.drawCircle(
-      centralStarLocation,
-      centralStar.size / parameter.scaleFactor,
-      centralStarPaint,
-    );
+    radius = (centralStar.diameter / maxSpaceSize) * parameter.windowSize / 2;
+    print("CentalStar: ${radius * parameter.windowSize}");
+
+    canvas.drawCircle(centralStarLocation, radius, centralStarPaint);
 
     for (Planet planet in planets) {
       Offset planetLocation = Offset(
-        parameter.windowWidth * planet.position.x,
-        parameter.windowWidth * planet.position.y,
+        (planet.position.x * parameter.astronomicalUnit / maxSpaceSize) *
+            parameter.windowSize,
+        (planet.position.y * parameter.astronomicalUnit / maxSpaceSize) *
+            parameter.windowSize,
       );
       Paint planetPaint =
           Paint()
             ..color = planet.color
             ..style = PaintingStyle.fill;
 
-      canvas.drawCircle(
-        planetLocation,
-        parameter.windowWidth * planet.diameter / (2 * parameter.scaleFactor),
-        planetPaint,
-      );
+      radius = (planet.diameter / maxSpaceSize) * parameter.windowSize / 2;
+
+      print("Planet ${planet.name}: ${radius}");
+
+      // canvas.drawCircle(
+      //   planetLocation,
+      //   radius,
+      //   planetPaint,
+      // );
     }
   }
 

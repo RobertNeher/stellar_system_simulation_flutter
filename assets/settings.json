@@ -1,18 +1,20 @@
 {
     "version": "0.0.1",
     "parameter": {
-        "windowHeight": 1400,
-        "windowWidth": 1400,
+        "windowSize": 1400,
         "centerX": 700,
         "centerY": 700,
         "font": "comicsans",
         "fontSize": 16,
         "astronomicalUnit": 149600000000,
         "gravityConstant": 6.67428e-11,
-        "scaleFactor": 100000,
+        "scaleFactor": 32,
         "updatePeriod": 1,
         "timeStep": 86400,
-        "backgroundColor": "#000000"
+        "backgroundColor": "#000000",
+        "stars": true,
+        "starColor": "#ffd740",
+        "starCount": 500
     },
     "centralStar": {
         "name": "Sun",
