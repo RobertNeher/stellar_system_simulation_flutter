@@ -66,7 +66,7 @@ class _PlanetarySystemSimulationAppState
           for (Map<String, dynamic> planet in settings['planets']) {
             planets.add(Planet.fromJson(planet));
           }
-          
+
           return Center(
             child: Scaffold(
               backgroundColor: parameter.backgroundColor,
@@ -75,11 +75,8 @@ class _PlanetarySystemSimulationAppState
                 centerTitle: true,
                 title: Text(
                   widget.appBarTitle,
-                  // textDirection: TextDirection.ltr,
                   style: TextStyle(
-                    color: complimentaryColorFromColor(
-                      parameter.backgroundColor,
-                    ),
+                    color: complimentaryColor(parameter.backgroundColor),
                     letterSpacing: 3,
                     fontSize: 20,
                     fontWeight: FontWeight.w600,

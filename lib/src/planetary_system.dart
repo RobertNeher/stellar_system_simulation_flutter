@@ -18,13 +18,9 @@ class PlanetarySystem extends CustomPainter {
     required this.spaceTime,
     required this.factor,
   }) {
-    factor =
-        parameter.scaleFactor *
-        parameter.astronomicalUnit /
-        centralStar.diameter;
-
-    print(factor); // TODO: Remove print
-    print(centralStar.size); // TODO: Remove print
+    print(
+      centralStar.diameter / parameter.astronomicalUnit * parameter.windowSize,
+    );
   }
 
   @override
@@ -40,26 +36,26 @@ class PlanetarySystem extends CustomPainter {
 
     canvas.drawCircle(
       centralStarLocation,
-      centralStar.size / parameter.scaleFactor,
+      centralStar.diameter / parameter.astronomicalUnit * parameter.windowSize,
       centralStarPaint,
     );
 
-    for (Planet planet in planets) {
-      Offset planetLocation = Offset(
-        parameter.windowWidth * planet.position.x,
-        parameter.windowWidth * planet.position.y,
-      );
-      Paint planetPaint =
-          Paint()
-            ..color = planet.color
-            ..style = PaintingStyle.fill;
+    // for (Planet planet in planets) {
+    //   Offset planetLocation = Offset(
+    //     parameter.windowWidth * planet.position.x,
+    //     parameter.windowWidth * planet.position.y,
+    //   );
+    //   Paint planetPaint =
+    //       Paint()
+    //         ..color = planet.color
+    //         ..style = PaintingStyle.fill;
 
-      canvas.drawCircle(
-        planetLocation,
-        parameter.windowWidth * planet.diameter / (2 * parameter.scaleFactor),
-        planetPaint,
-      );
-    }
+    //   canvas.drawCircle(
+    //     planetLocation,
+    //     parameter.windowWidth * planet.diameter / (2 * parameter.scaleFactor),
+    //     planetPaint,
+    //   );
+    // }
   }
 
   @override

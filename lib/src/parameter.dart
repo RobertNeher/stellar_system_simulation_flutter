@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Parameter {
-  int windowHeight = 0;
-  int windowWidth = 0;
+  int windowSize = 0;
   double centerX = 0;
   double centerY = 0;
   String font = "";
@@ -15,8 +14,7 @@ class Parameter {
   Color backgroundColor = Colors.black;
 
   Parameter({
-    required this.windowHeight,
-    required this.windowWidth,
+    required this.windowSize,
     required this.centerX,
     required this.centerY,
     required this.font,
@@ -31,8 +29,7 @@ class Parameter {
 
   factory Parameter.fromJson(Map<String, dynamic> json) {
     return Parameter(
-      windowHeight: json['windowHeight'],
-      windowWidth: json['windowWidth'],
+      windowSize: json['windowSize'],
       centerX: json['centerX'].toDouble(),
       centerY: json['centerY'].toDouble(),
       font: json['font'],
@@ -43,7 +40,7 @@ class Parameter {
       updatePeriod: json['updatePeriod'],
       timeStep: json['timeStep'],
       backgroundColor: Color(
-        int.parse("0x${json['backgroundColor'].substring(1)}"),
+        int.parse("0xff${json['backgroundColor'].substring(1)}"),
       ),
     );
   }
@@ -52,7 +49,7 @@ class Parameter {
   String toString() {
     print("Parameters");
     print("AU: ${this.astronomicalUnit}");
-    print("WindowH/W: ${this.windowHeight}/${this.windowWidth}");
+    print("Window size: ${this.windowSize}");
     print("Gravity Constant: ${this.gravityConstant}");
     print("centerX/Y: ${this.centerX}/${this.centerY}");
     print("Font: ${this.font}(${this.fontSize})");

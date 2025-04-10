@@ -33,8 +33,7 @@ class CentralStar {
         json['velocityX'].toDouble(),
         json['velocityY'].toDouble(),
       ),
-      // color: int.parse("0x${json['color'].substring(1)}"),
-      color: Color(int.parse("0x${json['color'].substring(1)}")),
+      color: Color(int.parse("0xff${json['color'].substring(1)}")),
       size: json['size'],
     );
   }

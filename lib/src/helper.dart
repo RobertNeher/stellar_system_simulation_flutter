@@ -8,19 +8,9 @@ Color colorFromString(String colorString) {
   return Color(int.parse(color));
 }
 
-Color complimentaryColorFromString(String rgb) {
-  Color color = colorFromString(rgb);
+Color complimentaryColor(Color color) {
   return Color.fromARGB(
-    color.a.toInt(),
-    255 - color.r.toInt(),
-    255 - color.b.toInt(),
-    255 - color.g.toInt(),
-  );
-}
-
-Color complimentaryColorFromColor(Color color) {
-  return Color.fromARGB(
-    color.a.toInt(),
+    255 - color.a.toInt(),
     255 - color.r.toInt(),
     255 - color.b.toInt(),
     255 - color.g.toInt(),
@@ -29,7 +19,7 @@ Color complimentaryColorFromColor(Color color) {
 
 Color randomColor() {
   return Color.from(
-    alpha: 0,
+    alpha: 255,
     red: Random().nextDouble() * 256,
     green: Random().nextDouble() * 256,
     blue: Random().nextDouble() * 256,
