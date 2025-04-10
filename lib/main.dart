@@ -26,6 +26,10 @@ class _PlanetarySystemSimulationAppState
     extends State<PlanetarySystemSimulationApp>
     with TickerProviderStateMixin {
   Map<String, dynamic> settings = {};
+  late final AnimationController _controller = AnimationController(
+    duration: const Duration(seconds: 3),
+    vsync: this,
+  )..forward();
 
   @override
   void initState() {
@@ -40,6 +44,7 @@ class _PlanetarySystemSimulationAppState
 
   @override
   void dispose() {
+    _controller.dispose();
     super.dispose();
   }
 
@@ -67,31 +72,33 @@ class _PlanetarySystemSimulationAppState
             planets.add(Planet.fromJson(planet));
           }
 
-          return Center(
-            child: Scaffold(
+          // parameter.windowSize = MediaQuery.of(context).size.width.round();
+          // parameter.centerX = parameter.windowSize / 2;
+          // parameter.centerY = parameter.windowSize / 2;
+
+          return Scaffold(
+            backgroundColor: parameter.backgroundColor,
+            appBar: AppBar(
               backgroundColor: parameter.backgroundColor,
-              appBar: AppBar(
-                backgroundColor: parameter.backgroundColor,
-                centerTitle: true,
-                title: Text(
-                  widget.appBarTitle,
-                  style: TextStyle(
-                    color: complimentaryColor(parameter.backgroundColor),
-                    letterSpacing: 3,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                  ),
+              centerTitle: true,
+              title: Text(
+                widget.appBarTitle,
+                style: TextStyle(
+                  color: complimentaryColor(parameter.backgroundColor),
+                  letterSpacing: 3,
+                  fontSize: 20,
+                  fontWeight: FontWeight.w600,
                 ),
               ),
-              body: Center(
-                child: CustomPaint(
-                  painter: PlanetarySystem(
-                    centralStar: centralStar,
-                    planets: planets,
-                    parameter: parameter,
-                    spaceTime: 0,
-                    sizeFactor: 32,
-                  ),
+            ),
+            body: Center(
+              child: CustomPaint(
+                painter: PlanetarySystem(
+                  centralStar: centralStar,
+                  planets: planets,
+                  parameter: parameter,
+                  spaceTime: 0,
+                  sizeFactor: 32,
                 ),
               ),
             ),

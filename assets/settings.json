@@ -8,7 +8,7 @@
         "fontSize": 16,
         "astronomicalUnit": 149600000000,
         "gravityConstant": 6.67428e-11,
-        "scaleFactor": "3e6",
+        "scaleFactor": "1e6",
         "updatePeriod": 1,
         "timeStep": 86400,
         "backgroundColor": "#000000"
