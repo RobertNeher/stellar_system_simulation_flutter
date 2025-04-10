@@ -36,7 +36,7 @@ class Parameter {
       fontSize: json['fontSize'],
       astronomicalUnit: json['astronomicalUnit'].toDouble(),
       gravityConstant: json['gravityConstant'].toDouble(),
-      scaleFactor: json['scaleFactor'].toDouble(),
+      scaleFactor: double.parse(json['scaleFactor']),
       updatePeriod: json['updatePeriod'],
       timeStep: json['timeStep'],
       backgroundColor: Color(

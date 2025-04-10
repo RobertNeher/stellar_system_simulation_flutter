@@ -9,18 +9,17 @@ class PlanetarySystem extends CustomPainter {
   CentralStar centralStar;
   List<Planet> planets = [];
   int spaceTime = 0;
-  double factor = 0.0;
+  double sizeFactor = 0.0;
+  double planetarySystemSize = 0.0;
 
   PlanetarySystem({
     required this.parameter,
     required this.centralStar,
     required this.planets,
     required this.spaceTime,
-    required this.factor,
+    required this.sizeFactor,
   }) {
-    print(
-      centralStar.diameter / parameter.astronomicalUnit * parameter.windowSize,
-    );
+    this.planetarySystemSize = this.sizeFactor * parameter.astronomicalUnit;
   }
 
   @override
@@ -34,28 +33,33 @@ class PlanetarySystem extends CustomPainter {
           ..color = centralStar.color
           ..style = PaintingStyle.fill;
 
-    canvas.drawCircle(
-      centralStarLocation,
-      centralStar.diameter / parameter.astronomicalUnit * parameter.windowSize,
-      centralStarPaint,
-    );
+    double factor =
+        centralStar.diameter /
+        parameter.astronomicalUnit *
+        parameter.windowSize;
 
-    // for (Planet planet in planets) {
-    //   Offset planetLocation = Offset(
-    //     parameter.windowWidth * planet.position.x,
-    //     parameter.windowWidth * planet.position.y,
-    //   );
-    //   Paint planetPaint =
-    //       Paint()
-    //         ..color = planet.color
-    //         ..style = PaintingStyle.fill;
+    canvas.drawCircle(centralStarLocation, factor, centralStarPaint);
 
-    //   canvas.drawCircle(
-    //     planetLocation,
-    //     parameter.windowWidth * planet.diameter / (2 * parameter.scaleFactor),
-    //     planetPaint,
-    //   );
-    // }
+    for (Planet planet in planets) {
+      // Planet planet = planets[0];
+      Offset planetLocation = Offset(
+        parameter.windowSize *
+            (planet.position.x *
+                parameter.astronomicalUnit /
+                this.planetarySystemSize),
+        parameter.windowSize *
+            (planet.position.y *
+                parameter.astronomicalUnit /
+                this.planetarySystemSize),
+      );
+      Paint planetPaint =
+          Paint()
+            ..color = planet.color
+            ..style = PaintingStyle.fill;
+      factor = planet.diameter / planetarySystemSize * parameter.scaleFactor;
+
+      canvas.drawCircle(planetLocation, factor, planetPaint);
+    }
   }
 
   @override

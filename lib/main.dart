@@ -90,7 +90,7 @@ class _PlanetarySystemSimulationAppState
                     planets: planets,
                     parameter: parameter,
                     spaceTime: 0,
-                    factor: parameter.scaleFactor,
+                    sizeFactor: 32,
                   ),
                 ),
               ),
