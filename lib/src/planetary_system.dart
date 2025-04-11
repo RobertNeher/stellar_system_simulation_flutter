@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:planet_simulation_flutter/src/central_star.dart';
+import 'package:planet_simulation_flutter/src/central_star_data.dart';
 import 'package:planet_simulation_flutter/src/parameter.dart';
 import 'package:planet_simulation_flutter/src/planet.dart';
 
-class PlanetarySystem extends CustomPainter {
+class PlanetarySystem extends StatefulWidget {
   Parameter parameter;
   CentralStar centralStar;
   List<Planet> planets = [];
@@ -13,55 +13,52 @@ class PlanetarySystem extends CustomPainter {
   double planetarySystemSize = 0.0;
 
   PlanetarySystem({
+    super.key,
     required this.parameter,
     required this.centralStar,
     required this.planets,
     required this.spaceTime,
     required this.sizeFactor,
   }) {
-    this.planetarySystemSize = this.sizeFactor * parameter.astronomicalUnit;
+    planetarySystemSize = sizeFactor * parameter.astronomicalUnit;
   }
 
   @override
-  void paint(Canvas canvas, Size size) {
-    Offset centralStarLocation = Offset(
-      centralStar.position.x,
-      centralStar.position.y,
-    );
-    Paint centralStarPaint =
-        Paint()
-          ..color = centralStar.color
-          ..style = PaintingStyle.fill;
-
-    double factor =
-        centralStar.diameter /
-        parameter.astronomicalUnit *
-        parameter.windowSize;
-
-    canvas.drawCircle(centralStarLocation, factor, centralStarPaint);
-
-    for (Planet planet in planets) {
-      // Planet planet = planets[0];
-      Offset planetLocation = Offset(
-        parameter.windowSize *
-            (planet.position.x *
-                parameter.astronomicalUnit /
-                this.planetarySystemSize),
-        parameter.windowSize *
-            (planet.position.y *
-                parameter.astronomicalUnit /
-                this.planetarySystemSize),
-      );
-      Paint planetPaint =
-          Paint()
-            ..color = planet.color
-            ..style = PaintingStyle.fill;
-      factor = planet.diameter / planetarySystemSize * parameter.scaleFactor;
-
-      canvas.drawCircle(planetLocation, factor, planetPaint);
-    }
-  }
-
-  @override
-  bool shouldRepaint(oldDelegate) => false;
+  State<PlanetarySystem> createState() => _PlanetarySystemState();
 }
+
+class _PlanetarySystemState extends State<PlanetarySystem> {
+  @override
+  Widget build(BuildContext context) {
+    return Container();
+  }
+}
+
+  // @override
+  // void paint(Canvas canvas, Size size) {
+
+  //   for (Planet planet in planets) {
+  //     // Planet planet = planets[0];
+  //     Offset planetLocation = Offset(
+  //       parameter.windowSize *
+  //           (planet.position.x *
+  //               parameter.astronomicalUnit /
+  //               this.planetarySystemSize),
+  //       parameter.windowSize *
+  //           (planet.position.y *
+  //               parameter.astronomicalUnit /
+  //               this.planetarySystemSize),
+  //     );
+  //     Paint planetPaint =
+  //         Paint()
+  //           ..color = planet.color
+  //           ..style = PaintingStyle.fill;
+  //     factor = planet.diameter / planetarySystemSize * parameter.scaleFactor;
+
+  //     canvas.drawCircle(planetLocation, factor, planetPaint);
+  //   }
+  // }
+
+//   @override
+//   bool shouldRepaint(oldDelegate) => false;
+// }

@@ -1,52 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:vector_math/vector_math.dart' as vector;
+import 'package:planet_simulation_flutter/src/central_star_data.dart';
+import 'package:planet_simulation_flutter/src/parameter.dart';
 
-class CentralStar {
-  String name;
-  double diameter;
-  double mass;
-  vector.Vector2 position;
-  vector.Vector2 velocity;
-  Color color;
-  int size;
+class CentralStar extends StatelessWidget {
+  late CentralStarData data;
+  late Parameter parameter;
 
-  CentralStar({
-    required this.name,
-    required this.diameter,
-    required this.mass,
-    required this.position,
-    required this.velocity,
-    required this.color,
-    required this.size,
-  });
+  CentralStar({required data, required parameter});
 
-  factory CentralStar.fromJson(Map<String, dynamic> json) {
-    return CentralStar(
-      name: json['name'],
-      diameter: json['diameter'].toDouble(),
-      mass: json['mass'].toDouble(),
-      position: vector.Vector2(
-        json['centerX'].toDouble(),
-        json['centerY'].toDouble(),
-      ),
-      velocity: vector.Vector2(
-        json['velocityX'].toDouble(),
-        json['velocityY'].toDouble(),
-      ),
-      color: Color(int.parse("0xff${json['color'].substring(1)}")),
-      size: json['size'],
-    );
-  }
   @override
-  String toString() {
-    print("Central Star");
-    print("Name: ${this.name}");
-    print("Diameter: ${this.diameter}");
-    print("Mass: ${this.mass}");
-    print("Position: ${this.position}");
-    print("VelocityX/Y: ${this.velocity}");
-    print("Color: ${this.color.toString()}");
-    print("Size: ${this.size}");
-    return super.toString();
+  Widget build(BuildContext context) {
+    return CustomPaint(painter: CentralStarPainter());
+  }
+}
+
+class CentralStarPainter extends CustomPainter {
+  late CentralStarData data;
+  late Parameter parameter;
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Offset centralStarLocation = Offset(data.position.x, data.position.y);
+
+    Paint centralStarPaint =
+        Paint()
+          ..color = data.color
+          ..style = PaintingStyle.fill;
+
+    double factor =
+        data.diameter / parameter.astronomicalUnit * parameter.windowSize;
+
+    canvas.drawCircle(centralStarLocation, factor, centralStarPaint);
+  }
+
+  @override
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
 }
