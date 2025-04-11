@@ -2,37 +2,39 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 class Star extends CustomPainter {
-  double size = 0;
+  double windowSize = 0;
+  double starSize = 0;
   double positionX = 0;
   double positionY = 0;
-  Color color;
+  Color starColor;
+  Paint starPaint = Paint();
 
-  Star({required this.size, required this.color}) {
+  Star({
+    required this.windowSize,
+    required this.starSize,
+    required this.starColor,
+  }) {
     Random random = Random();
-    positionX = random.nextDouble() * size;
-    positionY = random.nextDouble() * size;
+    positionX = random.nextDouble() * windowSize;
+    positionY = random.nextDouble() * windowSize;
+    starPaint =
+        Paint()
+          ..color = starColor
+          ..style = PaintingStyle.fill
+          ..strokeWidth = 1;
   }
 
   @override
   void paint(Canvas canvas, Size size) {
-    final centerX = positionX; //size.width / 2;
-    final centerY = positionY; //size.height / 2;
-    final radius = this.size / 2;
-
-    final paint =
-        Paint()
-          ..color = color
-          ..style = PaintingStyle.fill;
-
     final path = Path();
     final points = 6;
     final angle = (pi * 2) / points;
 
     for (int i = 0; i < points * 2; i++) {
       final currentAngle = angle * i;
-      final currentRadius = i.isEven ? radius : radius / 2;
-      final x = centerX + currentRadius * cos(currentAngle);
-      final y = centerY + currentRadius * sin(currentAngle);
+      final currentRadius = i.isEven ? starSize : starSize / 2;
+      final x = positionX + currentRadius * cos(currentAngle);
+      final y = positionY + currentRadius * sin(currentAngle);
 
       if (i == 0) {
         path.moveTo(x, y);
@@ -42,7 +44,7 @@ class Star extends CustomPainter {
     }
 
     path.close();
-    canvas.drawPath(path, paint);
+    canvas.drawPath(path, starPaint);
   }
 
   @override

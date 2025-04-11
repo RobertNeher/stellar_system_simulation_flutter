@@ -12,6 +12,7 @@
         "backgroundColor": "#000000",
         "backgroundStars": true,
         "maxStars": 500,
+        "starSize": 5,
         "starColor": "#ffff00"
     },
     "centralStar": {

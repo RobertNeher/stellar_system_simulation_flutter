@@ -12,6 +12,7 @@ class Parameter {
   Color backgroundColor = Colors.black;
   bool backgroundStars = false;
   int maxStars = 0;
+  double starSize = 0;
   Color starColor = Colors.amberAccent;
 
   Parameter({
@@ -26,6 +27,7 @@ class Parameter {
     required this.backgroundColor,
     required this.backgroundStars,
     required this.maxStars,
+    required this.starSize,
     required this.starColor,
   });
 
@@ -44,7 +46,8 @@ class Parameter {
       ),
       backgroundStars: json['backgroundStars'],
       maxStars: json['maxStars'],
-      starColor: Color(int.parse("0xff${json['starColor'].substring(1)}"))
+      starSize: json['starSize'].toDouble(),
+      starColor: Color(int.parse("0xff${json['starColor'].substring(1)}")),
     );
   }
 
@@ -60,8 +63,9 @@ class Parameter {
     print("Period: ${this.updatePeriod}");
     print("bg color: ${this.backgroundColor}");
     print("bg stars: ${this.backgroundStars}");
-    print("maximum stars: ${this.maxStars}");
-    print("star color: ${this.starColor}");
+    print("Maximum stars: ${this.maxStars}");
+    print("Star size: ${this.starSize}");
+    print("Star color: ${this.starColor}");
 
     return super.toString();
   }
