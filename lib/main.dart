@@ -5,7 +5,6 @@ import 'package:planet_simulation_flutter/space_background.dart';
 import 'package:planet_simulation_flutter/src/central_star.dart';
 import 'package:planet_simulation_flutter/src/central_star_data.dart';
 import 'package:planet_simulation_flutter/src/parameter.dart';
-import 'package:planet_simulation_flutter/src/planet.dart';
 import 'package:planet_simulation_flutter/src/helper.dart';
 
 void main() => runApp(
@@ -37,11 +36,6 @@ class _PlanetarySystemSimulationAppState
   Future<void> _loadSettings() async {
     String jsonData = await rootBundle.loadString('settings.json');
     settings = json.decode(jsonData);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
