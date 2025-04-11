@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:planet_simulation_flutter/src/central_star.dart';
+import 'package:planet_simulation_flutter/space_background.dart';
+// import 'package:planet_simulation_flutter/src/central_star.dart';
 import 'package:planet_simulation_flutter/src/parameter.dart';
 import 'package:planet_simulation_flutter/src/planet.dart';
-import 'package:planet_simulation_flutter/src/planetary_system.dart';
+// import 'package:planet_simulation_flutter/src/planetary_system.dart';
 import 'package:planet_simulation_flutter/src/helper.dart';
 
 void main() => runApp(
@@ -59,14 +60,13 @@ class _PlanetarySystemSimulationAppState
         if (snapshot.connectionState == ConnectionState.done) {
           List<Planet> planets = [];
           Parameter parameter = Parameter.fromJson(settings['parameter']);
-          CentralStar centralStar = CentralStar.fromJson(
-            settings['centralStar'],
-          );
+          // CentralStar centralStar = CentralStar.fromJson(
+          //   settings['centralStar'],
+          // );
 
-          for (Map<String, dynamic> planet in settings['planets']) {
-            planets.add(Planet.fromJson(planet));
-          }
-
+          // for (Map<String, dynamic> planet in settings['planets']) {
+          //   planets.add(Planet.fromJson(planet));
+          // }
           return Center(
             child: Scaffold(
               backgroundColor: parameter.backgroundColor,
@@ -83,16 +83,9 @@ class _PlanetarySystemSimulationAppState
                   ),
                 ),
               ),
-              body: Center(
-                child: CustomPaint(
-                  painter: PlanetarySystem(
-                    centralStar: centralStar,
-                    planets: planets,
-                    parameter: parameter,
-                    spaceTime: 0,
-                    sizeFactor: 32,
-                  ),
-                ),
+              body: Stack(
+                alignment: Alignment.center,
+                children: [SpaceBackground(parameter: parameter)],
               ),
             ),
           );

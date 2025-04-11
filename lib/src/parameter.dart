@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 class Parameter {
   int windowSize = 0;
-  double centerX = 0;
-  double centerY = 0;
   String font = "";
   int fontSize = 0;
   double astronomicalUnit = 0;
@@ -12,11 +10,12 @@ class Parameter {
   int updatePeriod = 0;
   int timeStep = 0;
   Color backgroundColor = Colors.black;
+  bool backgroundStars = false;
+  int maxStars = 0;
+  Color starColor = Colors.amberAccent;
 
   Parameter({
     required this.windowSize,
-    required this.centerX,
-    required this.centerY,
     required this.font,
     required this.fontSize,
     required this.astronomicalUnit,
@@ -25,13 +24,14 @@ class Parameter {
     required this.updatePeriod,
     required this.timeStep,
     required this.backgroundColor,
+    required this.backgroundStars,
+    required this.maxStars,
+    required this.starColor,
   });
 
   factory Parameter.fromJson(Map<String, dynamic> json) {
     return Parameter(
       windowSize: json['windowSize'],
-      centerX: json['centerX'].toDouble(),
-      centerY: json['centerY'].toDouble(),
       font: json['font'],
       fontSize: json['fontSize'],
       astronomicalUnit: json['astronomicalUnit'].toDouble(),
@@ -42,6 +42,9 @@ class Parameter {
       backgroundColor: Color(
         int.parse("0xff${json['backgroundColor'].substring(1)}"),
       ),
+      backgroundStars: json['backgroundStars'],
+      maxStars: json['maxStars'],
+      starColor: Color(int.parse("0xff${json['starColor'].substring(1)}"))
     );
   }
 
@@ -51,12 +54,15 @@ class Parameter {
     print("AU: ${this.astronomicalUnit}");
     print("Window size: ${this.windowSize}");
     print("Gravity Constant: ${this.gravityConstant}");
-    print("centerX/Y: ${this.centerX}/${this.centerY}");
     print("Font: ${this.font}(${this.fontSize})");
     print("Scale: ${this.scaleFactor}");
     print("Timestep: ${this.timeStep}");
     print("Period: ${this.updatePeriod}");
     print("bg color: ${this.backgroundColor}");
+    print("bg stars: ${this.backgroundStars}");
+    print("maximum stars: ${this.maxStars}");
+    print("star color: ${this.starColor}");
+
     return super.toString();
   }
 }
