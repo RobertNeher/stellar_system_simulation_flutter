@@ -11,7 +11,6 @@ class Parameter {
   double scaleFactor = 0;
   int updatePeriod = 0;
   int timeStep = 0;
-  Color backgroundColor = Colors.black;
 
   Parameter({
     required this.windowSize,
@@ -24,7 +23,6 @@ class Parameter {
     required this.scaleFactor,
     required this.updatePeriod,
     required this.timeStep,
-    required this.backgroundColor,
   });
 
   factory Parameter.fromJson(Map<String, dynamic> json) {
@@ -39,9 +37,6 @@ class Parameter {
       scaleFactor: double.parse(json['scaleFactor']),
       updatePeriod: json['updatePeriod'],
       timeStep: json['timeStep'],
-      backgroundColor: Color(
-        int.parse("0xff${json['backgroundColor'].substring(1)}"),
-      ),
     );
   }
 
@@ -56,7 +51,6 @@ class Parameter {
     print("Scale: ${this.scaleFactor}");
     print("Timestep: ${this.timeStep}");
     print("Period: ${this.updatePeriod}");
-    print("bg color: ${this.backgroundColor}");
     return super.toString();
   }
 }

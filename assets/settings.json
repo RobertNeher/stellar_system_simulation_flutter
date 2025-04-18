@@ -10,8 +10,15 @@
         "gravityConstant": 6.67428e-11,
         "scaleFactor": "1e6",
         "updatePeriod": 1,
-        "timeStep": 86400,
-        "backgroundColor": "#000000"
+        "timeStep": 86400
+    },
+    "spaceBackground": {
+        "backgroundColor": "#000000",
+        "stars": false,
+        "starSize": 6,
+        "starEdges": 5,
+        "starColor": "#fffff0",
+        "maxStars": 200
     },
     "centralStar": {
         "name": "Sun",

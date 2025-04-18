@@ -6,11 +6,10 @@ A dynamic configurable planetary system fed by asset settings.json.
 
 The simulation may be influenced by parameters:</BR>
 
-    * windowHeight: 1400: Size of Canvas
-    * windowWidth: 1400: Size of Canvas
-    * centerX: 700: Usually in the middle of the canvas
-    * centerY: 700: Usually in the middle of the canvas
-    * font": "comicsans": Font family being used when text is shown
+    * windowSize: 1000: Size of Canvas
+    * centerX: 500: Usually in the middle of thee canvas
+    * centerY: 500: Usually in the middle of the canvas
+    * font: "comicsans": Font family being used when text is shown
     * fontSize: 16: This text' size
     * astronomicalUnit: 149600000000000: in m
     * gravityConstant (G): 6.67428e-11 in m^3 kg^−1 s^−2

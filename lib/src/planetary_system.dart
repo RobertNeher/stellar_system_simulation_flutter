@@ -1,28 +1,31 @@
 import 'dart:math';
+
 import 'package:flutter/material.dart';
+import 'package:vector_math/vector_math.dart' as vector;
 
 import 'package:planet_simulation_flutter/src/central_star.dart';
 import 'package:planet_simulation_flutter/src/parameter.dart';
 import 'package:planet_simulation_flutter/src/planet.dart';
-import 'package:vector_math/vector_math.dart' as vector;
 
 class PlanetarySystem extends StatefulWidget {
-  late Parameter parameter;
-  late CentralStar centralStar;
-  late List<Planet> planets = [];
+  Parameter parameter;
+  CentralStar centralStar;
+  List<Planet> planets = [];
   int spaceTime = 0;
   double sizeFactor = 0.0;
   double planetarySystemSize = 0.0;
   double centralStarDrawingRadius = 0;
 
   PlanetarySystem({
+    Key? key,
     required parameter,
     required centralStar,
     required planets,
     required spaceTime,
     required sizeFactor,
-    super.key,
-  });
+    required planetarySystemSize,
+    required centralStarDrawingRadius,
+  }) : super(key: key);
   @override
   State<PlanetarySystem> createState() => _PlanetarySystemState();
 }
@@ -45,7 +48,7 @@ class _PlanetarySystemState extends State<PlanetarySystem> {
 }
 
 class PlanetarySystemPainter extends CustomPainter {
-  Parameter parameter;
+  Parameter? parameter;
   CentralStar centralStar;
   List<Planet> planets = [];
   int spaceTime = 0;
@@ -60,11 +63,11 @@ class PlanetarySystemPainter extends CustomPainter {
     required this.spaceTime,
     required this.sizeFactor,
   }) {
-    planetarySystemSize = this.sizeFactor * parameter.astronomicalUnit;
+    planetarySystemSize = this.sizeFactor * parameter!.astronomicalUnit;
     centralStarDrawingRadius =
         centralStar.diameter /
-        (2 * parameter.astronomicalUnit) *
-        parameter.windowSize *
+        (2 * parameter!.astronomicalUnit) *
+        parameter!.windowSize *
         centralStar.sizeFactor;
   }
 
@@ -73,7 +76,7 @@ class PlanetarySystemPainter extends CustomPainter {
       pow((next.position.x - before.position.x), 2) +
           pow((next.position.y - before.position.y), 2),
     );
-    double force = parameter.gravityConstant * before.mass / pow(distance, 2);
+    double force = parameter!.gravityConstant * before.mass / pow(distance, 2);
     double theta = atan2(
       (next.position.y - before.position.y),
       (next.position.x - before.position.x),
@@ -100,14 +103,14 @@ class PlanetarySystemPainter extends CustomPainter {
 
     for (Planet planet in planets) {
       Offset planetLocation = Offset(
-        (parameter.windowSize *
+        (parameter!.windowSize *
                 (planet.position.x *
-                    parameter.astronomicalUnit /
+                    parameter!.astronomicalUnit /
                     this.planetarySystemSize)) +
             this.centralStarDrawingRadius,
-        parameter.windowSize *
+        parameter!.windowSize *
             (planet.position.y *
-                parameter.astronomicalUnit /
+                parameter!.astronomicalUnit /
                 this.planetarySystemSize),
       );
       Paint planetPaint =
@@ -115,7 +118,7 @@ class PlanetarySystemPainter extends CustomPainter {
             ..color = planet.color
             ..style = PaintingStyle.fill;
       double radius =
-          planet.diameter / planetarySystemSize * parameter.scaleFactor;
+          planet.diameter / planetarySystemSize * parameter!.scaleFactor;
 
       canvas.drawCircle(planetLocation, radius, planetPaint);
     }

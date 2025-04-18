@@ -6,8 +6,10 @@ import 'package:flutter/services.dart';
 import 'package:planet_simulation_flutter/src/central_star.dart';
 import 'package:planet_simulation_flutter/src/parameter.dart';
 import 'package:planet_simulation_flutter/src/planet.dart';
-import 'package:planet_simulation_flutter/src/planetary_system.dart';
+// import 'package:planet_simulation_flutter/src/planetary_system.dart';
 import 'package:planet_simulation_flutter/src/helper.dart';
+import 'package:planet_simulation_flutter/src/space_background.dart';
+import 'package:planet_simulation_flutter/src/space_background_data.dart';
 
 void main() => runApp(
   MaterialApp(
@@ -33,9 +35,9 @@ class _PlanetarySystemSimulationAppState
   void initState() {
     _loadSettings();
 
-    Timer timer = Timer.periodic(Duration(milliseconds: 1000), (timer) {
-      setState(() {});
-    });
+    // final Timer timer = Timer.periodic(Duration(milliseconds: 1000), (timer) {
+    //   setState(() {});
+    // });
     super.initState();
   }
 
@@ -68,6 +70,8 @@ class _PlanetarySystemSimulationAppState
           CentralStar centralStar = CentralStar.fromJson(
             settings['centralStar'],
           );
+          SpaceBackgroundData spaceBackgroundData =
+              SpaceBackgroundData.fromJson(settings['spaceBackground']);
 
           for (Map<String, dynamic> planet in settings['planets']) {
             planets.add(Planet.fromJson(planet));
@@ -75,28 +79,34 @@ class _PlanetarySystemSimulationAppState
 
           return Center(
             child: Scaffold(
-              backgroundColor: parameter.backgroundColor,
+              backgroundColor: spaceBackgroundData.backgroundColor,
               appBar: AppBar(
-                backgroundColor: parameter.backgroundColor,
+                backgroundColor: spaceBackgroundData.backgroundColor,
                 centerTitle: true,
                 title: Text(
                   widget.appBarTitle,
                   style: TextStyle(
-                    color: complimentaryColor(parameter.backgroundColor),
+                    color: complimentaryColor(
+                      spaceBackgroundData.backgroundColor,
+                    ),
                     letterSpacing: 3,
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
-              body: Center(
-                child: PlanetarySystem(
-                  centralStar: centralStar,
-                  planets: planets,
-                  parameter: parameter,
-                  spaceTime: 0,
-                  sizeFactor: 32,
-                ),
+              body: Stack(
+                alignment: Alignment.center,
+                children: spaceBackground(parameter, spaceBackgroundData),
+                // child: PlanetarySystem(
+                //   centralStar: centralStar,
+                //   planets: planets,
+                //   parameter: parameter,
+                //   spaceTime: 0,
+                //   sizeFactor: 32,
+                //   centralStarDrawingRadius: 10,
+                //   planetarySystemSize: parameter.,
+                // ),
               ),
             ),
           );
