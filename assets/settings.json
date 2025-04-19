@@ -8,17 +8,18 @@
         "fontSize": 16,
         "astronomicalUnit": 149600000000,
         "gravityConstant": 6.67428e-11,
+        "totalSizeFactor": 32,
         "scaleFactor": "1e6",
         "updatePeriod": 1,
         "timeStep": 86400
     },
     "spaceBackground": {
-        "backgroundColor": "#000000",
+        "backgroundColor": "#000033",
         "stars": false,
-        "starSize": 6,
+        "starSize": 5,
         "starEdges": 5,
         "starColor": "#fffff0",
-        "maxStars": 200
+        "maxStars": 400
     },
     "centralStar": {
         "name": "Sun",
@@ -29,7 +30,7 @@
         "velocityY": 0,
         "centerX": 0,
         "centerY": 0,
-        "sizeFactor": 20
+        "sizeFactor": 15
     },
     "planets": [
         {

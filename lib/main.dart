@@ -8,6 +8,7 @@ import 'package:planet_simulation_flutter/src/parameter.dart';
 import 'package:planet_simulation_flutter/src/planet.dart';
 // import 'package:planet_simulation_flutter/src/planetary_system.dart';
 import 'package:planet_simulation_flutter/src/helper.dart';
+import 'package:planet_simulation_flutter/src/planetary_system.dart';
 import 'package:planet_simulation_flutter/src/space_background.dart';
 import 'package:planet_simulation_flutter/src/space_background_data.dart';
 
@@ -65,17 +66,29 @@ class _PlanetarySystemSimulationAppState
           );
         }
         if (snapshot.connectionState == ConnectionState.done) {
-          List<Planet> planets = [];
           Parameter parameter = Parameter.fromJson(settings['parameter']);
           CentralStar centralStar = CentralStar.fromJson(
             settings['centralStar'],
           );
           SpaceBackgroundData spaceBackgroundData =
               SpaceBackgroundData.fromJson(settings['spaceBackground']);
+          Stack stellarSystem = Stack(
+            alignment: Alignment.center,
+            children: spaceBackground(parameter, spaceBackgroundData),
+          );
+          List<Planet> planets = [];
 
           for (Map<String, dynamic> planet in settings['planets']) {
             planets.add(Planet.fromJson(planet));
           }
+
+          stellarSystem.children.add(
+            PlanetarySystem(
+              centralStar: centralStar,
+              planets: planets,
+              parameter: parameter,
+            ),
+          );
 
           return Center(
             child: Scaffold(
@@ -95,19 +108,7 @@ class _PlanetarySystemSimulationAppState
                   ),
                 ),
               ),
-              body: Stack(
-                alignment: Alignment.center,
-                children: spaceBackground(parameter, spaceBackgroundData),
-                // child: PlanetarySystem(
-                //   centralStar: centralStar,
-                //   planets: planets,
-                //   parameter: parameter,
-                //   spaceTime: 0,
-                //   sizeFactor: 32,
-                //   centralStarDrawingRadius: 10,
-                //   planetarySystemSize: parameter.,
-                // ),
-              ),
+              body: stellarSystem,
             ),
           );
         } else {

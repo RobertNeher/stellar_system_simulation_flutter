@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Parameter {
   int windowSize = 0;
   double centerX = 0;
@@ -9,6 +7,7 @@ class Parameter {
   double astronomicalUnit = 0;
   double gravityConstant = 0;
   double scaleFactor = 0;
+  int totalSizeFactor = 0;
   int updatePeriod = 0;
   int timeStep = 0;
 
@@ -21,6 +20,7 @@ class Parameter {
     required this.astronomicalUnit,
     required this.gravityConstant,
     required this.scaleFactor,
+    required this.totalSizeFactor,
     required this.updatePeriod,
     required this.timeStep,
   });
@@ -35,6 +35,7 @@ class Parameter {
       astronomicalUnit: json['astronomicalUnit'].toDouble(),
       gravityConstant: json['gravityConstant'].toDouble(),
       scaleFactor: double.parse(json['scaleFactor']),
+      totalSizeFactor: json['totalSizeFactor'],
       updatePeriod: json['updatePeriod'],
       timeStep: json['timeStep'],
     );
@@ -49,6 +50,7 @@ class Parameter {
     print("centerX/Y: ${this.centerX}/${this.centerY}");
     print("Font: ${this.font}(${this.fontSize})");
     print("Scale: ${this.scaleFactor}");
+    print("Total size factor: ${this.totalSizeFactor}");
     print("Timestep: ${this.timeStep}");
     print("Period: ${this.updatePeriod}");
     return super.toString();

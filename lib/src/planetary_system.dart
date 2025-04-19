@@ -8,24 +8,19 @@ import 'package:planet_simulation_flutter/src/parameter.dart';
 import 'package:planet_simulation_flutter/src/planet.dart';
 
 class PlanetarySystem extends StatefulWidget {
-  Parameter parameter;
-  CentralStar centralStar;
-  List<Planet> planets = [];
-  int spaceTime = 0;
-  double sizeFactor = 0.0;
-  double planetarySystemSize = 0.0;
-  double centralStarDrawingRadius = 0;
+  late final Parameter parameter;
+  late final CentralStar centralStar;
+  late List<Planet> planets = [];
+  final double sizeFactor = 0.0;
+  final double centralStarDrawingRadius = 0;
 
   PlanetarySystem({
-    Key? key,
-    required parameter,
-    required centralStar,
-    required planets,
-    required spaceTime,
-    required sizeFactor,
-    required planetarySystemSize,
-    required centralStarDrawingRadius,
-  }) : super(key: key);
+    super.key,
+    required this.parameter,
+    required this.centralStar,
+    required this.planets,
+  });
+
   @override
   State<PlanetarySystem> createState() => _PlanetarySystemState();
 }
@@ -39,8 +34,6 @@ class _PlanetarySystemState extends State<PlanetarySystem> {
           parameter: widget.parameter,
           centralStar: widget.centralStar,
           planets: widget.planets,
-          spaceTime: widget.spaceTime,
-          sizeFactor: widget.sizeFactor,
         ),
       ),
     );
@@ -51,19 +44,16 @@ class PlanetarySystemPainter extends CustomPainter {
   Parameter? parameter;
   CentralStar centralStar;
   List<Planet> planets = [];
-  int spaceTime = 0;
-  double sizeFactor = 0.0;
-  double planetarySystemSize = 0.0;
+  double planetarySystemSize = 0;
   double centralStarDrawingRadius = 0;
 
   PlanetarySystemPainter({
     required this.parameter,
     required this.centralStar,
     required this.planets,
-    required this.spaceTime,
-    required this.sizeFactor,
   }) {
-    planetarySystemSize = this.sizeFactor * parameter!.astronomicalUnit;
+    planetarySystemSize =
+        parameter!.totalSizeFactor * parameter!.astronomicalUnit;
     centralStarDrawingRadius =
         centralStar.diameter /
         (2 * parameter!.astronomicalUnit) *
@@ -106,12 +96,12 @@ class PlanetarySystemPainter extends CustomPainter {
         (parameter!.windowSize *
                 (planet.position.x *
                     parameter!.astronomicalUnit /
-                    this.planetarySystemSize)) +
-            this.centralStarDrawingRadius,
+                    planetarySystemSize)) +
+            centralStarDrawingRadius,
         parameter!.windowSize *
             (planet.position.y *
                 parameter!.astronomicalUnit /
-                this.planetarySystemSize),
+                planetarySystemSize),
       );
       Paint planetPaint =
           Paint()
