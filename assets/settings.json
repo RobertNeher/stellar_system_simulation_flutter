@@ -30,12 +30,13 @@
         "velocityY": 0,
         "centerX": 0,
         "centerY": 0,
-        "sizeFactor": 15
+        "sizeFactor": 10
     },
     "planets": [
         {
             "name": "Mercury",
-            "distance": 0.387,
+            "distance": 0.38710,
+            "period": 87.9693,
             "mass": 0.330,
             "color": "#626240",
             "velocityX": 0,
@@ -45,7 +46,8 @@
         },
         {
             "name": "Venus",
-            "distance": 0.723,
+            "distance": 0.72333,
+            "period": 224.7008,
             "mass": 4.8685,
             "color": "#ffcc99",
             "velocityX": 0,
@@ -56,6 +58,7 @@
         {
             "name": "Earth",
             "distance": 1.0,
+            "period": 365.2564,
             "mass": 5.9742,
             "color": "#0080ff",
             "velocityX": 0,
@@ -65,7 +68,8 @@
         },
         {
             "name": "Mars",
-            "distance": 1.524,
+            "distance": 1.52366,
+            "period": 686.9796,
             "mass": 0.639,
             "color": "#990000",
             "velocityX": 0,
@@ -75,7 +79,8 @@
         },
         {
             "name": "Jupiter",
-            "distance": 5.2,
+            "distance": 5.20336,
+            "period": 4332.8201,
             "mass": 1898.6,
             "color": "#ffd24d",
             "velocityX": 0,
@@ -85,7 +90,8 @@
         },
         {
             "name": "Saturn",
-            "distance": 9.6,
+            "distance": 9.53707,
+            "period": 10775.599,
             "mass": 568.46,
             "color": "#ffdf80",
             "velocityX": 0,
@@ -95,7 +101,8 @@
         },
         {
             "name": "Uranus",
-            "distance": 19.2,
+            "distance": 19.1913,
+            "period": 30687.153,
             "mass": 86.81,
             "color": "#0090ff",
             "velocityX": 0,
@@ -105,7 +112,8 @@
         },
         {
             "name": "Neptune",
-            "distance": 30.1,
+            "distance": 30.0690,
+            "period": 60190.03,
             "mass": 102.43,
             "color": "#4db8ff",
             "velocityX": 0,

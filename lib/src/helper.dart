@@ -10,18 +10,18 @@ Color colorFromString(String colorString) {
 
 Color complimentaryColor(Color color) {
   return Color.fromARGB(
-    255 - color.a.toInt(),
-    255 - color.r.toInt(),
-    255 - color.b.toInt(),
-    255 - color.g.toInt(),
+    255 - color.alpha,
+    255 - color.red,
+    255 - color.blue,
+    255 - color.green,
   );
 }
 
 Color randomColor() {
-  return Color.from(
-    alpha: 255,
-    red: Random().nextDouble() * 256,
-    green: Random().nextDouble() * 256,
-    blue: Random().nextDouble() * 256,
+  return Color.fromARGB(
+    255,
+    Random().nextInt(256),
+    Random().nextInt(256),
+    Random().nextInt(256),
   );
 }

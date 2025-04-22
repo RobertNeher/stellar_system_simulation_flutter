@@ -13,7 +13,7 @@ import 'package:planet_simulation_flutter/src/space_background.dart';
 import 'package:planet_simulation_flutter/src/space_background_data.dart';
 
 void main() => runApp(
-  MaterialApp(
+      const MaterialApp(
     home: PlanetarySystemSimulationApp(),
     debugShowCheckedModeBanner: false,
   ),
@@ -36,20 +36,12 @@ class _PlanetarySystemSimulationAppState
   void initState() {
     _loadSettings();
 
-    // final Timer timer = Timer.periodic(Duration(milliseconds: 1000), (timer) {
-    //   setState(() {});
-    // });
     super.initState();
   }
 
   Future<void> _loadSettings() async {
     String jsonData = await rootBundle.loadString('settings.json');
     settings = json.decode(jsonData);
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
   }
 
   @override
@@ -79,7 +71,7 @@ class _PlanetarySystemSimulationAppState
           List<Planet> planets = [];
 
           for (Map<String, dynamic> planet in settings['planets']) {
-            planets.add(Planet.fromJson(planet));
+            planets.add(Planet.fromJson(planet, parameter.astronomicalUnit));
           }
 
           stellarSystem.children.add(
@@ -112,7 +104,7 @@ class _PlanetarySystemSimulationAppState
             ),
           );
         } else {
-          return Text(
+          return const Text(
             'Something went wrong!',
             style: TextStyle(
               // fontFamily: 'Railway',

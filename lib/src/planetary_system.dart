@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -26,15 +27,27 @@ class PlanetarySystem extends StatefulWidget {
 }
 
 class _PlanetarySystemState extends State<PlanetarySystem> {
+  double stellarSystemTime = 0;
+  Timer? timer;
+  @override
+  void initState() {
+    // widget.parameter.timeStep.toDouble();
+    timer = Timer.periodic(const Duration(milliseconds: 1000), (timer) {
+      setState(() {});
+    });
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
+    stellarSystemTime += widget.parameter.timeStep;
     return Center(
       child: CustomPaint(
         painter: PlanetarySystemPainter(
-          parameter: widget.parameter,
-          centralStar: widget.centralStar,
-          planets: widget.planets,
-        ),
+            parameter: widget.parameter,
+            centralStar: widget.centralStar,
+            planets: widget.planets,
+            stellarSystemTime: stellarSystemTime),
       ),
     );
   }
@@ -44,46 +57,28 @@ class PlanetarySystemPainter extends CustomPainter {
   Parameter? parameter;
   CentralStar centralStar;
   List<Planet> planets = [];
-  double planetarySystemSize = 0;
   double centralStarDrawingRadius = 0;
+  double stellarSystemTime = 0;
 
-  PlanetarySystemPainter({
-    required this.parameter,
-    required this.centralStar,
-    required this.planets,
-  }) {
-    planetarySystemSize =
-        parameter!.totalSizeFactor * parameter!.astronomicalUnit;
-    centralStarDrawingRadius =
-        centralStar.diameter /
+  PlanetarySystemPainter(
+      {required this.parameter,
+      required this.centralStar,
+      required this.planets,
+      required this.stellarSystemTime}) {
+    centralStarDrawingRadius = centralStar.diameter /
         (2 * parameter!.astronomicalUnit) *
         parameter!.windowSize *
         centralStar.sizeFactor;
   }
-
-  vector.Vector2 attraction(Planet before, Planet next) {
-    double distance = sqrt(
-      pow((next.position.x - before.position.x), 2) +
-          pow((next.position.y - before.position.y), 2),
-    );
-    double force = parameter!.gravityConstant * before.mass / pow(distance, 2);
-    double theta = atan2(
-      (next.position.y - before.position.y),
-      (next.position.x - before.position.x),
-    );
-    return vector.Vector2((cos(theta) * force), sin(theta) * force);
-  }
-
   @override
   void paint(Canvas canvas, Size size) {
     Offset centralStarLocation = Offset(
       centralStar.position.x,
       centralStar.position.y,
     );
-    Paint centralStarPaint =
-        Paint()
-          ..color = centralStar.color
-          ..style = PaintingStyle.fill;
+    Paint centralStarPaint = Paint()
+      ..color = centralStar.color
+      ..style = PaintingStyle.fill;
 
     canvas.drawCircle(
       centralStarLocation,
@@ -92,25 +87,45 @@ class PlanetarySystemPainter extends CustomPainter {
     );
 
     for (Planet planet in planets) {
-      Offset planetLocation = Offset(
-        (parameter!.windowSize *
-                (planet.position.x *
-                    parameter!.astronomicalUnit /
-                    planetarySystemSize)) +
-            centralStarDrawingRadius,
-        parameter!.windowSize *
-            (planet.position.y *
-                parameter!.astronomicalUnit /
-                planetarySystemSize),
-      );
-      Paint planetPaint =
-          Paint()
-            ..color = planet.color
-            ..style = PaintingStyle.fill;
-      double radius =
-          planet.diameter / planetarySystemSize * parameter!.scaleFactor;
+      double theta =
+          2 * pi * stellarSystemTime / (planet.period * parameter!.timeStep);
 
-      canvas.drawCircle(planetLocation, radius, planetPaint);
+      planet.position.x = parameter!.windowSize *
+          (planet.position.x / 2) *
+          cos(theta) /
+          parameter!.astronomicalUnit;
+      planet.position.y = parameter!.windowSize *
+          (planet.diameter / 2) *
+          sin(theta) /
+          parameter!.astronomicalUnit;
+
+      Offset planetLocation = Offset(
+          (parameter!.windowSize *
+                      (planet.position.x *
+                          parameter!.astronomicalUnit /
+                          parameter!.totalSizeFactor *
+                          parameter!.astronomicalUnit)) /
+                  parameter!.astronomicalUnit +
+              centralStarDrawingRadius,
+          (parameter!.windowSize *
+                  (planet.position.y *
+                      parameter!.astronomicalUnit /
+                      parameter!.totalSizeFactor *
+                      parameter!.astronomicalUnit)) /
+              parameter!.astronomicalUnit);
+
+      Paint planetPaint = Paint()
+        ..color = planet.color
+        ..style = PaintingStyle.fill;
+      double radius = planet.diameter /
+          parameter!.totalSizeFactor *
+          parameter!.astronomicalUnit *
+          parameter!.scaleFactor;
+
+      print(
+          "${radius}: ${planetLocation.dx / parameter!.astronomicalUnit}/${planetLocation.dy / parameter!.astronomicalUnit}");
+      canvas.drawCircle(
+          planetLocation / parameter!.astronomicalUnit, radius, planetPaint);
     }
   }
 
