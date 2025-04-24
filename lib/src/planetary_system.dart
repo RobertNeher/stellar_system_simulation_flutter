@@ -33,14 +33,16 @@ class _PlanetarySystemState extends State<PlanetarySystem> {
   void initState() {
     // widget.parameter.timeStep.toDouble();
     timer = Timer.periodic(const Duration(milliseconds: 1000), (timer) {
-      setState(() {});
+      setState(() {
+        stellarSystemTime += widget.parameter.timeStep;
+        // print(stellarSystemTime);
+      });
     });
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    stellarSystemTime += widget.parameter.timeStep;
     return Center(
       child: CustomPaint(
         painter: PlanetarySystemPainter(
@@ -72,6 +74,8 @@ class PlanetarySystemPainter extends CustomPainter {
   }
   @override
   void paint(Canvas canvas, Size size) {
+    print("Painting: $stellarSystemTime");
+
     Offset centralStarLocation = Offset(
       centralStar.position.x,
       centralStar.position.y,
@@ -110,12 +114,12 @@ class PlanetarySystemPainter extends CustomPainter {
           (parameter!.totalSizeFactor * parameter!.astronomicalUnit) *
           parameter!.scaleFactor;
       print(
-          "x (${planet.name}: ${radius} - ${planet.position.x}/${planet.position.y}");
+          "x (${planet.name}/${stellarSystemTime}: ${radius} - ${planet.position.x}/${planet.position.y}");
 
       canvas.drawCircle(planetLocation, radius, planetPaint);
     }
   }
 
   @override
-  bool shouldRepaint(oldDelegate) => false;
+  bool shouldRepaint(oldDelegate) => true;
 }
