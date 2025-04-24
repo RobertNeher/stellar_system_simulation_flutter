@@ -90,42 +90,29 @@ class PlanetarySystemPainter extends CustomPainter {
       double theta =
           2 * pi * stellarSystemTime / (planet.period * parameter!.timeStep);
 
-      planet.position.x = parameter!.windowSize *
-          (planet.position.x / 2) *
-          cos(theta) /
-          parameter!.astronomicalUnit;
-      planet.position.y = parameter!.windowSize *
-          (planet.diameter / 2) *
-          sin(theta) /
-          parameter!.astronomicalUnit;
+      planet.position.x = (parameter!.windowSize *
+              (planet.position.x / 2) *
+              cos(theta) /
+              parameter!.astronomicalUnit) /
+          5;
 
-      Offset planetLocation = Offset(
-          (parameter!.windowSize *
-                      (planet.position.x *
-                          parameter!.astronomicalUnit /
-                          parameter!.totalSizeFactor *
-                          parameter!.astronomicalUnit)) /
-                  parameter!.astronomicalUnit +
-              centralStarDrawingRadius,
-          (parameter!.windowSize *
-                  (planet.position.y *
-                      parameter!.astronomicalUnit /
-                      parameter!.totalSizeFactor *
-                      parameter!.astronomicalUnit)) /
-              parameter!.astronomicalUnit);
+      planet.position.y = (parameter!.windowSize *
+              (planet.position.y / 2) *
+              sin(theta) /
+              parameter!.astronomicalUnit) /
+          5;
 
+      Offset planetLocation = Offset(planet.position.x, planet.position.y);
       Paint planetPaint = Paint()
         ..color = planet.color
         ..style = PaintingStyle.fill;
       double radius = planet.diameter /
-          parameter!.totalSizeFactor *
-          parameter!.astronomicalUnit *
+          (parameter!.totalSizeFactor * parameter!.astronomicalUnit) *
           parameter!.scaleFactor;
-
       print(
-          "${radius}: ${planetLocation.dx / parameter!.astronomicalUnit}/${planetLocation.dy / parameter!.astronomicalUnit}");
-      canvas.drawCircle(
-          planetLocation / parameter!.astronomicalUnit, radius, planetPaint);
+          "x (${planet.name}: ${radius} - ${planet.position.x}/${planet.position.y}");
+
+      canvas.drawCircle(planetLocation, radius, planetPaint);
     }
   }
 
