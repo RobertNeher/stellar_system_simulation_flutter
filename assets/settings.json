@@ -4,8 +4,6 @@
         "windowSize": 1000,
         "centerX": 500,
         "centerY": 500,
-        "font": "comicsans",
-        "fontSize": 16,
         "astronomicalUnit": 149600000000,
         "gravityConstant": 6.67428e-11,
         "totalSizeFactor": 32,
