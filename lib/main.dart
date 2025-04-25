@@ -14,11 +14,11 @@ import 'package:planet_simulation_flutter/src/space_background.dart';
 import 'package:planet_simulation_flutter/src/space_background_data.dart';
 
 void main() => runApp(
-      const MaterialApp(
-        home: PlanetarySystemSimulationApp(),
-        debugShowCheckedModeBanner: false,
-      ),
-    );
+  const MaterialApp(
+    home: PlanetarySystemSimulationApp(),
+    debugShowCheckedModeBanner: false,
+  ),
+);
 
 class PlanetarySystemSimulationApp extends StatefulWidget {
   const PlanetarySystemSimulationApp({super.key});
@@ -29,7 +29,8 @@ class PlanetarySystemSimulationApp extends StatefulWidget {
 }
 
 class _PlanetarySystemSimulationAppState
-    extends State<PlanetarySystemSimulationApp> with TickerProviderStateMixin {
+    extends State<PlanetarySystemSimulationApp>
+    with TickerProviderStateMixin {
   Map<String, dynamic> settings = {};
 
   @override
@@ -79,10 +80,10 @@ class _PlanetarySystemSimulationAppState
             planets.add(Planet.fromJson(planet, parameter.astronomicalUnit));
           }
 
-          stellarSystem.children.add(
+          stellarSystem.children.addAll([
             CentralStar(centralStarData, parameter),
-            // PlanetarySystem(parameter: parameter, planets: planets),
-          );
+            PlanetarySystem(parameter: parameter, planets: planets),
+          ]);
 
           return Center(
             child: Scaffold(
