@@ -6,15 +6,15 @@ import 'package:planet_simulation_flutter/src/space_background_data.dart';
 import 'package:planet_simulation_flutter/src/star_painter.dart';
 
 List<Widget> spaceBackground(
-  Parameter parameter,
+  double windowSize,
   SpaceBackgroundData backgroundData,
 ) {
   List<Widget> starsInSpace = <Widget>[];
 
   starsInSpace.add(
     Container(
-      width: parameter.windowSize.toDouble(),
-      height: parameter.windowSize.toDouble(),
+      width: windowSize,
+      height: windowSize,
       color: backgroundData.backgroundColor,
     ),
   );
@@ -33,8 +33,8 @@ List<Widget> spaceBackground(
 
   for (int i = 0; i < backgroundData.maxStars; i++) {
     Positioned positionedStar = Positioned(
-      left: Random().nextDouble() * parameter.windowSize,
-      top: Random().nextDouble() * parameter.windowSize,
+      left: Random().nextDouble() * windowSize,
+      top: Random().nextDouble() * windowSize,
       child: star,
     );
     starsInSpace.add(positionedStar);

@@ -13,7 +13,7 @@
     },
     "spaceBackground": {
         "backgroundColor": "#000033",
-        "stars": false,
+        "stars": true,
         "starSize": 5,
         "starEdges": 5,
         "starColor": "#fffff0",
