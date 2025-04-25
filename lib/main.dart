@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:planet_simulation_flutter/src/central_star.dart';
+import 'package:planet_simulation_flutter/src/central_star_data.dart';
 import 'package:planet_simulation_flutter/src/parameter.dart';
 import 'package:planet_simulation_flutter/src/planet.dart';
 // import 'package:planet_simulation_flutter/src/planetary_system.dart';
@@ -14,10 +15,10 @@ import 'package:planet_simulation_flutter/src/space_background_data.dart';
 
 void main() => runApp(
       const MaterialApp(
-    home: PlanetarySystemSimulationApp(),
-    debugShowCheckedModeBanner: false,
-  ),
-);
+        home: PlanetarySystemSimulationApp(),
+        debugShowCheckedModeBanner: false,
+      ),
+    );
 
 class PlanetarySystemSimulationApp extends StatefulWidget {
   const PlanetarySystemSimulationApp({super.key});
@@ -28,8 +29,7 @@ class PlanetarySystemSimulationApp extends StatefulWidget {
 }
 
 class _PlanetarySystemSimulationAppState
-    extends State<PlanetarySystemSimulationApp>
-    with TickerProviderStateMixin {
+    extends State<PlanetarySystemSimulationApp> with TickerProviderStateMixin {
   Map<String, dynamic> settings = {};
 
   @override
@@ -59,14 +59,19 @@ class _PlanetarySystemSimulationAppState
         }
         if (snapshot.connectionState == ConnectionState.done) {
           Parameter parameter = Parameter.fromJson(settings['parameter']);
-          CentralStar centralStar = CentralStar.fromJson(
+          double windowSize =
+              (parameter.windowSize > MediaQuery.of(context).size.width
+                      ? parameter.windowSize
+                      : MediaQuery.of(context).size.width.toDouble())
+                  .toDouble();
+          CentralStarData centralStarData = CentralStarData.fromJson(
             settings['centralStar'],
           );
           SpaceBackgroundData spaceBackgroundData =
               SpaceBackgroundData.fromJson(settings['spaceBackground']);
           Stack stellarSystem = Stack(
             alignment: Alignment.center,
-            children: spaceBackground(parameter, spaceBackgroundData),
+            children: spaceBackground(windowSize, spaceBackgroundData),
           );
           List<Planet> planets = [];
 
@@ -75,11 +80,8 @@ class _PlanetarySystemSimulationAppState
           }
 
           stellarSystem.children.add(
-            PlanetarySystem(
-              centralStar: centralStar,
-              planets: planets,
-              parameter: parameter,
-            ),
+            CentralStar(centralStarData, parameter),
+            // PlanetarySystem(parameter: parameter, planets: planets),
           );
 
           return Center(

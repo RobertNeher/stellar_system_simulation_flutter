@@ -1,53 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:vector_math/vector_math.dart' as vector;
+import 'package:planet_simulation_flutter/src/parameter.dart';
 
-class CentralStar {
-  String name;
-  double diameter;
-  double mass;
-  vector.Vector2 position;
-  vector.Vector2 velocity;
-  Color color;
-  int sizeFactor;
+import 'package:planet_simulation_flutter/src/central_star_data.dart';
 
-  CentralStar({
-    required this.name,
-    required this.diameter,
-    required this.mass,
-    required this.position,
-    required this.velocity,
-    required this.color,
-    required this.sizeFactor,
-  });
+class CentralStarPainter extends CustomPainter {
+  late Parameter parameter;
+  late CentralStarData centralStarData;
+  double centralStarDrawingRadius = 0;
 
-  factory CentralStar.fromJson(Map<String, dynamic> json) {
-    return CentralStar(
-      name: json['name'],
-      diameter: json['diameter'].toDouble(),
-      mass: json['mass'].toDouble(),
-      position: vector.Vector2(
-        json['centerX'].toDouble(),
-        json['centerY'].toDouble(),
-      ),
-      velocity: vector.Vector2(
-        json['velocityX'].toDouble(),
-        json['velocityY'].toDouble(),
-      ),
-      color: Color(int.parse("0xff${json['color'].substring(1)}")),
-      sizeFactor: json['sizeFactor'],
+  CentralStarPainter({required this.parameter, required this.centralStarData}) {
+    centralStarDrawingRadius = centralStarData.diameter /
+        (2 * parameter!.astronomicalUnit) *
+        parameter.windowSize *
+        centralStarData.sizeFactor;
+  }
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    Offset centralStarLocation = Offset(
+      centralStarData.position.x,
+      centralStarData.position.y,
+    );
+    Paint centralStarPaint = Paint()
+      ..color = centralStarData.color
+      ..style = PaintingStyle.fill;
+
+    canvas.drawCircle(
+      centralStarLocation,
+      centralStarDrawingRadius,
+      centralStarPaint,
     );
   }
 
   @override
-  String toString() {
-    print("Central Star");
-    print("Name: ${this.name}");
-    print("Diameter: ${this.diameter}");
-    print("Mass: ${this.mass}");
-    print("Position: ${this.position}");
-    print("VelocityX/Y: ${this.velocity}");
-    print("Color: ${this.color.toString()}");
-    print("Size factor: ${this.sizeFactor}");
-    return super.toString();
+  bool shouldRepaint(covariant CustomPainter oldDelegate) {
+    return false;
   }
+}
+
+Widget CentralStar(CentralStarData centralStarData, Parameter parameter) {
+  return CustomPaint(
+    painter: CentralStarPainter(
+        parameter: parameter, centralStarData: centralStarData),
+  );
 }
