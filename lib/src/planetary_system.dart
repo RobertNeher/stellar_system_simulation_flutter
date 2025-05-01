@@ -10,7 +10,7 @@ class PlanetarySystem extends StatefulWidget {
   final Parameter parameter;
   List<Planet> planets = [];
   final double sizeFactor = 0.0;
-  final double centralStarDrawingRadius = 0;
+  final double centralStarDrawingorbitalRadius = 0;
 
   PlanetarySystem({super.key, required this.parameter, required this.planets});
 
@@ -23,11 +23,11 @@ class _PlanetarySystemState extends State<PlanetarySystem> {
   Timer? timer;
   @override
   void initState() {
-    timer = Timer.periodic(const Duration(milliseconds: 1000), (timer) {
-      setState(() {
-        stellarSystemTime += widget.parameter.timeStep;
-      });
-    });
+    // timer = Timer.periodic(const Duration(milliseconds: 1000), (timer) {
+    // setState(() {
+    stellarSystemTime += widget.parameter.timeStep;
+    // });
+    // });
     super.initState();
   }
 
@@ -48,7 +48,7 @@ class _PlanetarySystemState extends State<PlanetarySystem> {
 class PlanetarySystemPainter extends CustomPainter {
   Parameter? parameter;
   List<Planet> planets = [];
-  double centralStarDrawingRadius = 0;
+  double centralStarDrawingorbitalRadius = 0;
   double stellarSystemTime = 0;
 
   PlanetarySystemPainter({
@@ -59,36 +59,41 @@ class PlanetarySystemPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     for (Planet planet in planets) {
-      double theta =
+      num theta =
           2 * pi * stellarSystemTime / (planet.period * parameter!.timeStep);
-
       planet.position.x =
           (parameter!.windowSize *
               (planet.position.x / 2) *
               cos(theta) /
               parameter!.astronomicalUnit);
 
+      num a = pow(
+        (parameter!.gravityConstant *
+                (planet.mass * pow(10, 24)) *
+                pow(planet.period * 86400, 2)) /
+            (4 * pow(pi, 2)),
+        1 / 3,
+      );
       planet.position.y =
           (parameter!.windowSize *
               (planet.position.y / 2) *
               sin(theta) /
-              parameter!.astronomicalUnit) /
-          5;
+              parameter!.astronomicalUnit);
 
       Offset planetLocation = Offset(planet.position.x, planet.position.y);
       Paint planetPaint =
           Paint()
             ..color = planet.color
             ..style = PaintingStyle.fill;
-      double radius =
-          planet.diameter /
+      double planetRadius =
+          planet.radius /
           (parameter!.totalSizeFactor * parameter!.astronomicalUnit) *
           parameter!.scaleFactor;
       print(
-        "x (${planet.name}/$theta: $radius - ${planet.position.x}/${planet.position.y}",
+        "x (${planet.name}/$theta: $planetRadius - ${planet.position} - $a",
       );
 
-      canvas.drawCircle(planetLocation, radius, planetPaint);
+      canvas.drawCircle(planetLocation, planetRadius, planetPaint);
     }
   }
 

@@ -34,12 +34,17 @@ Defined by following characteristics:</BR>
 ## Planets
 
 List of objects circling the central star with following characteristics for each:</BR>
+A good source for such basic data: </BR>
+https://ssd.jpl.nasa.gov/horizons/app.html#/</BR>
+https://ssd.jpl.nasa.gov/planets/phys_par.html</BR>
 
 <ul>
         <li> name: Self-speaking
-        <li> mass: Normalized factor basing upon 10^24 kg
+        <li> distance: as factor in AU (basing upon m)
+        <li> period: Duration of complete orbit around central star (in Earth days)
+        <li> eccentricity: Eccetricity according Kepler 1 between 0 and 1
+        <li> radius: Equatorial radius (basing upon factor 10^6 m)
+        <li> mass: Normalized factor basing upon factor 10^24 kg
         <li> color: "#\<red in hex\>\<green in hex\>\<blue in hex\>" Self-speaking
-        <li>diameter: in m
-        <li>distance: as factor in AU (resulting in m)
-        <li>velocityX: 0: Not used yet
-        <li>velocityY: Circling speed in m/s
+        <li> velocity: Circling speed in m/s
+        <li> size: (laziness) factor for drawing a relative size of the object
